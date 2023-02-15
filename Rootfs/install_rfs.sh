@@ -14,7 +14,8 @@ THIS_SCRIPT_DIR="`pwd`"
 THIS_SCRIPT_NAME=`basename "$0"`
 
 X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED="aarch64-rpi4-linux-gnu"
-X_TOOLCHAIN_DIRECTORY="$HOME/x-tools"
+#X_TOOLCHAIN_DIRECTORY="$HOME/x-tools"
+X_TOOLCHAIN_DIRECTORY="/usr/local/bin/x-tools"
 
 KERNEL_ARCH="arm64"
 KERNEL_DEFAULT_CONFIG_FILE="bcm2711_defconfig" #this is raspberry pi config file used
@@ -56,11 +57,12 @@ echo "Kernel config file used for $RASPBERRYPI_PROCESSOR-based models (ARM64) li
 #Add Env variables
 echo " "; echo "Add Environment variables:"
 PATH=$X_TOOLCHAIN_DIRECTORY/$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED/bin/:$PATH
+echo " Path: $PATH"
 #PATH=$HOME/x-tools/aarch64-rpi4-linux-gnu/bin/:$PATH
 echo " "; echo "Added $PATH/bin/ to PATH env var"
 export ARCH=$KERNEL_ARCH
 echo " "; echo "Added $ARCH to ARCH env var"
-export CROSS_COMPILE="$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED"-
+export CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-'
 echo " "; echo "Added $CROSS_COMPILE to CROSS_COMPILE env var"
 
 if [ $REGENERATE_ALL ==  1 ]; then
@@ -124,7 +126,9 @@ if [ $REGENERATE_ALL ==  1 ]; then
 
 	# Change the owner of the directories to be root
 	# Because current user doesn't exist on target device
-	sudo chown -R root:root *
+	echo "**I am here $PWD"
+
+	sudo chown -R root:root $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 	echo " "; echo "Display $ROOTFS_ROOT_DIR directory tree"
 	tree -d
@@ -159,31 +163,30 @@ if [ $REGENERATE_ALL ==  1 ]; then
 	sudo make -j$MAKE_CORES distclean 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 
 	echo " "; echo "Configure busybox with crosscompile $CROSS_COMPILE"
-	make -j$MAKE_CORES CROSS_COMPILE='aarch64-rpi4-linux-gnu-' defconfig 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	make -j$MAKE_CORES CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' defconfig 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"'%' .config
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs"'%' .config
 	
-	#make menuconfig
-	#exit 1
+	make menuconfig
 
 	echo " "; echo "Cross compile busybox"
 	echo "ARCH is $KERNEL_ARCH and CROSS_COMPILE is $CROSS_COMPILE"
 	#make -j$MAKE_CORES ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE CONFIG_PREFIX=$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 
 	echo " "; echo "Install Busybox. Install Path is $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"
 
 	#sudo make -j$MAKE_CORES ARCH="$KERNEL_ARCH" CROSS_COMPILE="$CROSS_COMPILE" CONFIG_PREFIX=$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR install #2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	sudo make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' install #2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	sudo make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' install #2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	
 fi
 
 #Get Libraries for the file system
 echo " "; echo "Get the sysroot directory path of the x-toolchain"
-aarch64-rpi4-linux-gnu-gcc -print-sysroot
+/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-gcc -print-sysroot
 #/home/sergio/x-tools/aarch64-rpi4-linux-gnu/aarch64-rpi4-linux-gnu/sysroot
 echo "Add the sysroot directory path to env variable SYSROOT"
-SYSROOT=$(aarch64-rpi4-linux-gnu-gcc -print-sysroot)
+SYSROOT=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-gcc -print-sysroot)
 
 echo " "; echo "Find the libraries required by apps in our board, in this case busybox and copy these libraries to $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR."
 echo " "; echo "Show me the busybox program library dependencies found in busybox binary that I've created in the root filesystem $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox"
@@ -191,24 +194,24 @@ find $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR -name "*so*" -type f -delete
 
 cd $SYSROOT
 echo " "; echo "Library dependencies found in busybox bin with words -program interpreter-"
-lib=$($X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | grep "program interpreter" | rev | cut -d' ' -f1 | tr -d '][' | rev)
+lib=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | grep "program interpreter" | rev | cut -d' ' -f1 | tr -d '][' | rev)
 echo "$lib"
 echo " "; echo "Copy these libraries and symbolic links:"
-cp -v -a $SYSROOT$lib $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT$lib $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 echo " "; echo "Library dependencies found in busybox bin with words -Shared library-"
-libs=$($X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | awk '{print NR, $0}' | grep "Shared library" | rev | cut -d' ' -f1 | tr -d '][' | rev)
+libs=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | awk '{print NR, $0}' | grep "Shared library" | rev | cut -d' ' -f1 | tr -d '][' | rev)
 echo "$libs"
 echo " "; echo "Copy these libraries and symbolic links"
 
 #ls -l lib/libm.so.6 | rev | cut -d' ' -f1 | rev
-cp -v -a $SYSROOT/lib/libm.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib/libm.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 #ls -l lib64/libresolv.so.2 | rev | cut -d' ' -f1 | rev
-cp -v -a $SYSROOT/lib64/libresolv.so.2 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib64/libresolv.so.2 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 #ls -l lib64/libc.so.6 | rev | cut -d' ' -f1 | rev
-cp -v -a $SYSROOT/lib64/libc.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib64/libc.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 #Create busybox required devices
 echo " "; echo "Create busybox required devices:"
