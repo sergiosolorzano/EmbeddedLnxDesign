@@ -1,0 +1,10 @@
+#ignore source linux kernel
+/Kernel/linux-ltr
+/U-Boot/u-boot
+/firmware
+/Kernel/raspberrypi_linuxos
+/Kernel/result_files/L_uImage.bin
+/Rootfs/busybox
+/Rootfs/rootfs
+/initramfs.cpio
+/Rootfs/initramfs.cpio.gz
