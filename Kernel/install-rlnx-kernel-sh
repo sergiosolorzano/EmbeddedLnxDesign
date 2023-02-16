@@ -3,7 +3,7 @@
 
 set -e
 
-MAKE_CORES=16
+MAKE_CORES=14
 
 REGENERATE_ALL=1 #1=regenerates all main builds
 
