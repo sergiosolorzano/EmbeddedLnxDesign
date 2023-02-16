@@ -3,7 +3,7 @@
 
 set -e
 
-MAKE_CORES=16
+MAKE_CORES=14
 
 REGENERATE_ALL=1 #1=regenerates all main builds
 
@@ -56,7 +56,8 @@ echo "Kernel config file used for $RASPBERRYPI_PROCESSOR-based models (ARM64) li
 
 #Add Env variables
 echo " "; echo "Add Environment variables:"
-PATH=$X_TOOLCHAIN_DIRECTORY/$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED/bin/:$PATH
+#PATH=$X_TOOLCHAIN_DIRECTORY/$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED/bin/:$PATH
+PATH=/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/:$PATH
 echo " Path: $PATH"
 #PATH=$HOME/x-tools/aarch64-rpi4-linux-gnu/bin/:$PATH
 echo " "; echo "Added $PATH/bin/ to PATH env var"
@@ -137,7 +138,6 @@ if [ $REGENERATE_ALL ==  1 ]; then
 	if [ ! -f $BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME ]; then
 		echo "Create log file $BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME for busybox build and install"
 		touch $BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME
-		#chmod -R 777 $BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME
 	fi
 
 	#clear file
@@ -150,6 +150,7 @@ if [ $REGENERATE_ALL ==  1 ]; then
 		echo "Clone Busybox repo"
 		git clone $BUSYBOX_GIT_REPO
 		cd $THIS_SCRIPT_DIR/$BUSYBOX_DIR
+		git checkout -b 1_36_0
 		git branch
 		#git checkout -b $BUSYBOX_CHECKOUT_BRANCH -f
 	else
@@ -167,7 +168,7 @@ if [ $REGENERATE_ALL ==  1 ]; then
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"'%' .config
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs"'%' .config
 	
-	make menuconfig
+	#make menuconfig
 
 	echo " "; echo "Cross compile busybox"
 	echo "ARCH is $KERNEL_ARCH and CROSS_COMPILE is $CROSS_COMPILE"
@@ -198,6 +199,7 @@ lib=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-r
 echo "$lib"
 echo " "; echo "Copy these libraries and symbolic links:"
 sudo cp -v -a $SYSROOT$lib $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+echo $?
 
 echo " "; echo "Library dependencies found in busybox bin with words -Shared library-"
 libs=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | awk '{print NR, $0}' | grep "Shared library" | rev | cut -d' ' -f1 | tr -d '][' | rev)
@@ -206,12 +208,15 @@ echo " "; echo "Copy these libraries and symbolic links"
 
 #ls -l lib/libm.so.6 | rev | cut -d' ' -f1 | rev
 sudo cp -v -a $SYSROOT/lib/libm.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+echo $?
 
 #ls -l lib64/libresolv.so.2 | rev | cut -d' ' -f1 | rev
 sudo cp -v -a $SYSROOT/lib64/libresolv.so.2 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+echo $?
 
 #ls -l lib64/libc.so.6 | rev | cut -d' ' -f1 | rev
 sudo cp -v -a $SYSROOT/lib64/libc.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+echo $?
 
 #Create busybox required devices
 echo " "; echo "Create busybox required devices:"
@@ -229,6 +234,21 @@ if [ ! -e dev/console ]; then
 	sudo mknod -m 600 dev/console c 5 1
 else
 	echo "dev/console busybox device not created because it already exists."
+fi
+
+echo "Mount proc and sysfs in $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"
+if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" ]; then
+        sudo mount -t proc proc /proc
+        echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc"
+else 
+        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc already mounted, skip"
+fi
+
+if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" ]; then
+        sudo mount -t sysfs sysfs /sys
+				echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys"
+else 
+        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys already mounted, skip"
 fi
 
 #Transferring rootfs to the target
@@ -260,6 +280,9 @@ else
 	echo "$MOUNT_BOOT_DIRECTORY doesn't exist to delete it."
 fi
 
+#Create init program
+
+
 echo " "; echo "Create initramfs.cpio and initramfs image"
 find . | cpio -H newc -ov --owner root:root > ../initramfs.cpio
 
@@ -271,6 +294,7 @@ mkimage -A $ARCH -O linux -T ramdisk -d initramfs.cpio.gz -n $STANDALONE_INITRAM
 #copy rootfs to SD card boot
 echo " "; echo "Copy $THIS_SCRIPT_DIR/$STANDALONE_INITRAMFS_IMAGE to SD card"
 sudo cp -v $THIS_SCRIPT_DIR/$STANDALONE_INITRAMFS_IMAGE $MOUNT_BOOT_DIRECTORY
+echo $?
 
 #Create u-boot config script image
 echo " "; echo "Make u-boot config script image"
@@ -302,15 +326,16 @@ touch $UBOOT_INITRAMFS_CONFIG_FILENAME
 cat <<< ' 
 fatload mmc 0:1 ${kernel_addr_r} Image
 fatload mmc 0:1 ${ramdisk_addr_r} uRamdisk
-setenv bootargs console=serial0,115200 console=ttyAMA0 console=ttyS0 console=tty1 console=ttyO0 root=mmcblk0p1 rdinit=/bin/sh
+setenv bootargs console=serial0,115200 console=ttyAMA0 console=ttyS0 console=tty1 rdinit=/bin/sh
 booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr}' >> $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_FILENAME
 #setenv bootargs console=serial0,115200 console=ttyAMA0 console=ttyS0 console=tty1 console=ttyO0 rdinit=/bin/sh
 
 echo " "; echo "Make $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME image"
 $ROOT_UBOOT_DIR/$UBOOT_DIR/tools/mkimage -A $ARCH -O linux -T script -C none -n $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME_IMGNAME -d $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_FILENAME $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME
 
-echo "Copy $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME to SD card"
-sudo cp -v $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME $MOUNT_BOOT_DIRECTORY
+#echo "Copy $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME to SD card" 
+#sudo cp -v $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME $MOUNT_BOOT_DIRECTORY
+#echo $?
 
 echo " "; echo "Update db with new file names to use by locate"
 sudo updatedb

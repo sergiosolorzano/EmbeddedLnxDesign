@@ -1,0 +1,15 @@
+ 
+Add Environment variables:
+ 
+Added /home/sergio/x-tools/aarch64-rpi4-linux-gnu/:/home/sergio/My_EmbLnx_Bash:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin/ to PATH env var
+ 
+Added aarch64 to ARCH env var
+ 
+Add Environment variables:
+ 
+Added /home/sergio/x-tools/aarch64-rpi4-linux-gnu/:/home/sergio/x-tools/aarch64-rpi4-linux-gnu/:/home/sergio/My_EmbLnx_Bash:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin/ to PATH env var
+ 
+Added aarch64 to ARCH env var
+see buildroot_instructions.txt for next steps.
+ 
+Install Etcher? (y/n)

@@ -3,7 +3,7 @@
 
 set -e
 
-MAKE_CORES=16
+MAKE_CORES=14
 
 REGENERATE_ALL=1 #1=regenerates all main builds
 
@@ -112,33 +112,6 @@ if [ $REGENERATE_ALL ==  1 ]; then
       * ) echo "invalid choice, exiting."; exit 1;;
     esac
    
-    #unmount sd card e.g. dev/sdb
-    #for partition in "$(ls /dev/"$TARGET_DEVICE"?* | xargs -n1)"; do
-     # if findmnt "$partition"; then
-      #  echo "SD found. Unmount $partition"
-       # sudo umount "$partition"
-      #else
-       # echo "Partition $partition is already unmounted, skip."
-      #fi
-    #done
-    #for partition in /dev/$TARGET_DEVICE?*; do
-     # if mount | grep -q $partition; then
-      #  echo "SD found. Unmount $partition"
-       # sudo umount $partition
-      #else
-       # echo "Partition $partition is already unmounted, skip."
-      #fi
-    #done
-
-    #sudo umount /dev/"$TARGET_DEVICE"?* | xargs -n1 umount -l
-    #if findmnt /dev/$TARGET_DEVICE; then
-      #echo "SD found. Unmount /dev/$TARGET_DEVICE"
-      #sudo umount /dev/"$TARGET_DEVICE"1
-      #sudo umount /dev/"$TARGET_DEVICE"2
-    #else
-      #echo "SD card is already unmounted."
-    #fi
-
     $UTILITIES_DIRECTORY/$FORMAT_DEVICE_SCRIPT $TARGET_DEVICE
 
     echo " "; echo "Formatting $TARGET_DEVICE done."
@@ -151,25 +124,6 @@ if [ $REGENERATE_ALL ==  1 ]; then
   else
     echo " "; read -p "Enter device name (e.g. sdb) to upload u-boot files:" TARGET_DEVICE
   fi
-
-  #echo " "; echo "You should see "$TARGET_DEVICE"1 at mountpoint /media/user/boot and "$TARGET_DEVICE"2 at mountpoint /media/user/rootfs."
-  #read -p "Continue to mount device into $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY or exit? (y/n)?" cont
-  #case "$cont" in 
-    #y|Y|yes|Yes|YES ) echo "yes. Mount /dev/"$TARGET_DEVICE"1 to $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY";;
-    #n|N|No|NO ) echo "no. Exiting"; exit 1;;
-    #* ) echo "invalid choice, exiting."; exit 1;;
-  #esac
-
-  #mount usb device
-  #if ! mount | grep -q /dev/"$TARGET_DEVICE"1; then
-   # echo "Mount /dev/"$TARGET_DEVICE"1"
-    #sudo mount /dev/"$TARGET_DEVICE"1 $MOUNT_BOOT_DIRECTORY
-  #else
-   # echo "Partition /dev/"$TARGET_DEVICE"1 is already mounted, skip."
-  #fi
-
-  #sudo umount /dev/"$TARGET_DEVICE"?* | xargs -n1 umount -l
-  #sudo mount /dev/"$TARGET_DEVICE"1 $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY
 
   #Create log directory
   echo " "
@@ -266,16 +220,6 @@ if [ $REGENERATE_ALL ==  1 ]; then
   sudo cp -v $THIS_SCRIPT_DIR/config.txt $MOUNT_BOOT_DIRECTORY
 
 fi
-
-#unmount sd card e.g. device is dev/sdb1
-#for partition in /dev/$TARGET_DEVICE?*; do
- # if mount | grep -q $partition; then
-  #  echo "SD found. Unmount $partition"
-   # sudo umount $partition
-  #else
-   # echo "Partition $partition is already unmounted, skip."
-  #fi
-#done
 
 #updatedb
 echo " "; echo "Update db with new file names to use by locate"

@@ -1,10 +1,16 @@
+  CLEAN   applets
   CLEAN   scripts/basic
-  CLEAN   include/applets.h include/usage.h
+  CLEAN   scripts/kconfig
+  CLEAN   .tmp_versions
+  CLEAN   busybox busybox_unstripped busybox_unstripped.map busybox_unstripped.out busybox.links .kernelrelease
+  CLEAN   include/config
+  CLEAN   .config include/NUM_APPLETS.h include/common_bufsiz.h include/autoconf.h include/bbconfigopts.h include/bbconfigopts_bz2.h include/embedded_scripts.h include/usage_compressed.h include/applet_tables.h include/applets.h include/usage.h
+make[1]: Entering directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
   HOSTCC  scripts/basic/fixdep
   GEN     include/applets.h
-  GEN     include/usage.h
   HOSTCC  scripts/basic/split-include
   HOSTCC  scripts/basic/docproc
+  GEN     include/usage.h
   GEN     libpwdgrp/Kbuild
   GEN     mailutils/Kbuild
   GEN     mailutils/Config.in
@@ -63,8 +69,8 @@
   HOSTCC  scripts/kconfig/kxgettext.o
   HOSTCC  scripts/kconfig/mconf.o
   SHIPPED scripts/kconfig/zconf.tab.c
-  SHIPPED scripts/kconfig/lex.zconf.c
   SHIPPED scripts/kconfig/zconf.hash.c
+  SHIPPED scripts/kconfig/lex.zconf.c
   HOSTCC  scripts/kconfig/zconf.tab.o
   HOSTLD  scripts/kconfig/conf
 scripts/kconfig/conf -d Config.in
@@ -1220,6 +1226,8 @@ syslogd (13 kb) (SYSLOGD) [Y/n/?] (NEW) y
   Circular Buffer support (FEATURE_IPC_SYSLOG) [Y/n/?] (NEW) y
     Circular buffer size in Kbytes (minimum 4KB) (FEATURE_IPC_SYSLOG_BUFFER_SIZE) [16] (NEW) 16
   Linux kernel printk buffer support (FEATURE_KMSG_SYSLOG) [Y/n/?] (NEW) y
+make[1]: Leaving directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
+make[1]: Entering directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
   SPLIT   include/autoconf.h -> include/config/*
   GEN     include/bbconfigopts.h
   GEN     include/common_bufsiz.h
@@ -1244,260 +1252,283 @@ applets/usage.c:52:17: warning: ignoring return value of ‘write’ declared wi
   CC      archival/bbunzip.o
   CC      archival/bzip2.o
   CC      archival/chksum_and_xwrite_tar_header.o
+  CC      archival/cpio.o
+  CC      archival/dpkg.o
+  CC      archival/dpkg_deb.o
+  CC      archival/gzip.o
   LD      archival/libarchive/built-in.o
-  CC      archival/libarchive/common.o
+  CC      archival/lzop.o
   CC      archival/libarchive/data_align.o
+  CC      archival/libarchive/common.o
+  CC      archival/rpm.o
   CC      archival/libarchive/data_extract_all.o
+  CC      archival/tar.o
+  LD      console-tools/built-in.o
+  CC      console-tools/chvt.o
   CC      archival/libarchive/data_extract_to_command.o
+  CC      console-tools/clear.o
   CC      archival/libarchive/data_extract_to_stdout.o
   CC      archival/libarchive/data_skip.o
-  LD      console-tools/built-in.o
+  CC      archival/unzip.o
   CC      archival/libarchive/decompress_bunzip2.o
-  CC      console-tools/chvt.o
-  CC      console-tools/clear.o
-  CC      archival/libarchive/decompress_gunzip.o
   CC      console-tools/deallocvt.o
-  CC      console-tools/dumpkmap.o
+  CC      archival/libarchive/decompress_gunzip.o
   LD      coreutils/built-in.o
-  CC      archival/cpio.o
+  CC      console-tools/dumpkmap.o
+  CC      coreutils/basename.o
   CC      console-tools/fgconsole.o
   CC      console-tools/kbd_mode.o
-  CC      archival/dpkg.o
-  CC      coreutils/basename.o
-  CC      archival/dpkg_deb.o
-  CC      coreutils/cat.o
   CC      console-tools/loadfont.o
-  CC      archival/gzip.o
-  CC      archival/libarchive/decompress_unlzma.o
-  CC      coreutils/chgrp.o
   LD      coreutils/libcoreutils/built-in.o
-  CC      archival/libarchive/decompress_unxz.o
-  CC      coreutils/libcoreutils/cp_mv_stat.o
-  CC      coreutils/chmod.o
-  CC      coreutils/libcoreutils/getopt_mk_fifo_nod.o
-  CC      coreutils/chown.o
-  CC      coreutils/chroot.o
-  CC      archival/libarchive/filter_accept_all.o
   CC      console-tools/loadkmap.o
-  CC      coreutils/cksum.o
-  CC      archival/libarchive/filter_accept_list.o
-  CC      archival/lzop.o
-  AR      coreutils/libcoreutils/lib.a
+  CC      coreutils/libcoreutils/cp_mv_stat.o
   CC      console-tools/openvt.o
-  CC      coreutils/comm.o
-  CC      archival/rpm.o
-  CC      archival/tar.o
-  LD      debianutils/built-in.o
+  CC      coreutils/libcoreutils/getopt_mk_fifo_nod.o
+  CC      archival/libarchive/decompress_unlzma.o
   CC      console-tools/reset.o
+  CC      coreutils/cat.o
   CC      console-tools/resize.o
-  CC      archival/libarchive/filter_accept_list_reassign.o
-  CC      archival/unzip.o
-  CC      archival/libarchive/filter_accept_reject_list.o
   CC      console-tools/setconsole.o
-  CC      debianutils/pipe_progress.o
-  LD      klibc-utils/built-in.o
-  CC      coreutils/cp.o
-  CC      klibc-utils/resume.o
-  CC      debianutils/start_stop_daemon.o
+  LD      debianutils/built-in.o
+  CC      archival/libarchive/decompress_unxz.o
   CC      console-tools/setkeycodes.o
+  AR      archival/lib.a
+  CC      debianutils/pipe_progress.o
+  CC      console-tools/setlogcons.o
+  AR      coreutils/libcoreutils/lib.a
+  CC      archival/libarchive/filter_accept_all.o
+  CC      coreutils/chgrp.o
+  CC      console-tools/showkey.o
+  CC      coreutils/chmod.o
   CC      debianutils/run_parts.o
+  CC      coreutils/chroot.o
+  CC      archival/libarchive/filter_accept_list.o
+  CC      coreutils/chown.o
+  CC      coreutils/cksum.o
+  LD      klibc-utils/built-in.o
+  CC      archival/libarchive/filter_accept_list_reassign.o
+  CC      coreutils/comm.o
+  CC      klibc-utils/resume.o
+  LD      e2fsprogs/built-in.o
+  AR      console-tools/lib.a
+  CC      e2fsprogs/chattr.o
+  CC      archival/libarchive/filter_accept_reject_list.o
+  CC      debianutils/start_stop_daemon.o
+  CC      coreutils/cp.o
   CC      coreutils/cut.o
   CC      coreutils/date.o
-  LD      e2fsprogs/built-in.o
-  CC      debianutils/which.o
   CC      coreutils/dd.o
-  CC      e2fsprogs/chattr.o
-  CC      console-tools/setlogcons.o
   CC      archival/libarchive/find_list_entry.o
-  CC      e2fsprogs/e2fs_lib.o
-  AR      archival/lib.a
-  CC      e2fsprogs/fsck.o
-  LD      editors/built-in.o
-  CC      console-tools/showkey.o
-  CC      e2fsprogs/lsattr.o
+  CC      debianutils/which.o
   CC      archival/libarchive/get_header_ar.o
-  CC      editors/awk.o
+  LD      editors/built-in.o
   AR      klibc-utils/lib.a
+  CC      editors/awk.o
+  CC      e2fsprogs/e2fs_lib.o
   CC      editors/cmp.o
+  CC      coreutils/df.o
   CC      archival/libarchive/get_header_cpio.o
-  AR      debianutils/lib.a
   CC      archival/libarchive/get_header_tar.o
-  LD      findutils/built-in.o
   CC      archival/libarchive/get_header_tar_bz2.o
-  CC      findutils/find.o
-  AR      console-tools/lib.a
-  CC      editors/diff.o
-  LD      init/built-in.o
-  CC      editors/ed.o
   CC      archival/libarchive/get_header_tar_gz.o
-  CC      findutils/grep.o
-  CC      init/bootchartd.o
-  CC      editors/patch.o
-  CC      init/halt.o
+  AR      debianutils/lib.a
+  CC      editors/diff.o
+  CC      coreutils/dirname.o
+  CC      e2fsprogs/fsck.o
   CC      archival/libarchive/get_header_tar_lzma.o
-  CC      init/init.o
   CC      archival/libarchive/get_header_tar_xz.o
-  CC      findutils/xargs.o
+  CC      coreutils/dos2unix.o
+  CC      coreutils/du.o
+  LD      findutils/built-in.o
+  CC      editors/ed.o
+  CC      e2fsprogs/lsattr.o
+  CC      findutils/find.o
+  CC      coreutils/echo.o
+  CC      archival/libarchive/header_skip.o
+  CC      archival/libarchive/header_list.o
+  CC      editors/patch.o
   CC      editors/sed.o
-  LD      libbb/built-in.o
-  CC      libbb/appletlib.o
+  CC      archival/libarchive/header_verbose_list.o
+  LD      init/built-in.o
+  CC      archival/libarchive/init_handle.o
+  CC      coreutils/env.o
+  CC      init/bootchartd.o
+  CC      init/halt.o
   CC      editors/vi.o
+  AR      e2fsprogs/lib.a
+  CC      coreutils/expand.o
+  CC      init/init.o
+  CC      archival/libarchive/lzo1x_1.o
+  LD      libbb/built-in.o
+  CC      findutils/grep.o
+  CC      libbb/appletlib.o
+  CC      findutils/xargs.o
+  CC      coreutils/expr.o
+  CC      archival/libarchive/lzo1x_1o.o
   CC      libbb/ask_confirmation.o
   CC      libbb/auto_string.o
-  CC      archival/libarchive/header_list.o
-  CC      libbb/bb_askpass.o
-  CC      archival/libarchive/header_skip.o
-  AR      init/lib.a
-  CC      archival/libarchive/header_verbose_list.o
-  AR      findutils/lib.a
-  CC      libbb/bb_bswap_64.o
-  CC      archival/libarchive/init_handle.o
   LD      libpwdgrp/built-in.o
-  CC      archival/libarchive/lzo1x_1o.o
+  CC      coreutils/factor.o
   CC      libpwdgrp/pwd_grp.o
-  CC      archival/libarchive/lzo1x_1.o
-  CC      libbb/bb_cat.o
-  CC      libpwdgrp/uidgid_get.o
+  AR      init/lib.a
   LD      loginutils/built-in.o
-  CC      archival/libarchive/lzo1x_d.o
-  CC      libbb/bb_do_delay.o
-  CC      libbb/bb_getgroups.o
+  CC      libpwdgrp/uidgid_get.o
+  AR      findutils/lib.a
   CC      loginutils/add-remove-shell.o
+  CC      coreutils/false.o
+  CC      libbb/bb_askpass.o
+  CC      coreutils/fold.o
+  CC      archival/libarchive/lzo1x_d.o
+  CC      coreutils/head.o
   CC      archival/libarchive/open_transformer.o
-  CC      libbb/bb_getsockname.o
-  CC      libbb/bb_pwd.o
-  AR      libpwdgrp/lib.a
-  CC      archival/libarchive/seek_by_jump.o
-  LD      mailutils/built-in.o
   CC      loginutils/addgroup.o
+  CC      archival/libarchive/seek_by_jump.o
   CC      archival/libarchive/seek_by_read.o
-  CC      loginutils/adduser.o
-  CC      loginutils/chpasswd.o
+  LD      mailutils/built-in.o
   CC      mailutils/mail.o
-  AR      editors/lib.a
-  CC      libbb/bb_qsort.o
   CC      archival/libarchive/unpack_ar_archive.o
-  CC      libbb/bb_strtonum.o
-  CC      libbb/capability.o
-  CC      libbb/change_identity.o
   CC      mailutils/makemime.o
-  CC      loginutils/cryptpw.o
-  LD      miscutils/built-in.o
-  CC      miscutils/adjtimex.o
-  CC      libbb/chomp.o
-  LD      modutils/built-in.o
-  CC      archival/libarchive/unsafe_prefix.o
-  CC      modutils/modinfo.o
-  CC      modutils/modprobe-small.o
-  CC      archival/libarchive/unsafe_symlink_target.o
-  CC      modutils/modutils.o
-  CC      loginutils/deluser.o
+  AR      libpwdgrp/lib.a
   CC      mailutils/popmaildir.o
+  CC      coreutils/hostid.o
+  CC      loginutils/adduser.o
+  LD      miscutils/built-in.o
+  CC      libbb/bb_bswap_64.o
+  CC      mailutils/reformime.o
+  CC      coreutils/id.o
+  CC      miscutils/adjtimex.o
+  CC      archival/libarchive/unsafe_prefix.o
+  CC      coreutils/install.o
   CC      miscutils/ascii.o
-  CC      loginutils/getty.o
+  CC      loginutils/chpasswd.o
+  CC      libbb/bb_cat.o
+  LD      modutils/built-in.o
+  CC      miscutils/bc.o
+  CC      miscutils/beep.o
+  CC      modutils/modinfo.o
+  CC      mailutils/sendmail.o
+  CC      archival/libarchive/unsafe_symlink_target.o
   LD      networking/built-in.o
   CC      networking/arp.o
-  CC      libbb/common_bufsiz.o
-  CC      coreutils/df.o
-  CC      loginutils/login.o
+  AR      editors/lib.a
+  CC      loginutils/cryptpw.o
+  CC      modutils/modprobe-small.o
+  CC      libbb/bb_do_delay.o
+  CC      coreutils/ln.o
+  CC      loginutils/deluser.o
+  CC      coreutils/link.o
+  CC      modutils/modutils.o
+  CC      loginutils/getty.o
+  CC      libbb/bb_getgroups.o
+  CC      coreutils/logname.o
+  AR      archival/libarchive/lib.a
 modutils/modutils.c: In function 'filename2modname':
 cc1: warning: function may return address of local variable [-Wreturn-local-addr]
 modutils/modutils.c:94:14: note: declared here
    94 |         char local_modname[MODULE_NAME_LEN];
       |              ^~~~~~~~~~~~~
-  CC      coreutils/dirname.o
-  CC      loginutils/passwd.o
-  CC      libbb/compare_string_array.o
-  LD      networking/libiproute/built-in.o
-  CC      coreutils/dos2unix.o
-  CC      networking/libiproute/ip_parse_common_args.o
-  CC      mailutils/reformime.o
-  AR      modutils/lib.a
   CC      networking/arping.o
-  CC      networking/libiproute/ipaddress.o
-  AR      archival/libarchive/lib.a
-  CC      networking/libiproute/iplink.o
-  CC      libbb/concat_path_file.o
-  CC      miscutils/bc.o
-  CC      miscutils/beep.o
-  AR      e2fsprogs/lib.a
-  CC      mailutils/sendmail.o
-  CC      libbb/concat_subpath_file.o
-  CC      miscutils/chat.o
-  CC      coreutils/du.o
-  CC      coreutils/echo.o
-  CC      libbb/const_hack.o
-  CC      networking/brctl.o
-  CC      libbb/copy_file.o
-  CC      loginutils/su.o
-  CC      networking/libiproute/ipneigh.o
-  CC      libbb/copyfd.o
-  CC      networking/dnsd.o
-  LD      networking/udhcp/built-in.o
-  CC      networking/libiproute/iproute.o
-  CC      networking/libiproute/iprule.o
   AR      mailutils/lib.a
+  CC      coreutils/ls.o
+  CC      coreutils/md5_sha1_sum.o
+  CC      libbb/bb_getsockname.o
+  CC      loginutils/login.o
+  CC      networking/brctl.o
+  CC      libbb/bb_pwd.o
+  CC      coreutils/mkdir.o
+  CC      loginutils/passwd.o
+  AR      modutils/lib.a
+  CC      networking/dnsd.o
+  CC      libbb/bb_qsort.o
+  CC      networking/ether-wake.o
+  CC      loginutils/su.o
+  CC      libbb/bb_strtonum.o
+  LD      networking/libiproute/built-in.o
+  CC      miscutils/chat.o
+  CC      libbb/capability.o
+  CC      loginutils/sulogin.o
+  CC      networking/libiproute/ip_parse_common_args.o
+  CC      networking/ftpd.o
+  CC      networking/ftpgetput.o
+  CC      libbb/change_identity.o
+  LD      networking/udhcp/built-in.o
+  CC      coreutils/mkfifo.o
   CC      networking/udhcp/arpping.o
+  LD      printutils/built-in.o
+  CC      printutils/lpd.o
+  CC      coreutils/mknod.o
+  CC      networking/udhcp/common.o
+  CC      coreutils/mktemp.o
+  LD      procps/built-in.o
+  CC      networking/libiproute/ipaddress.o
+  CC      loginutils/vlock.o
+  CC      coreutils/mv.o
+  CC      printutils/lpr.o
+  CC      libbb/chomp.o
+  CC      procps/free.o
+  CC      libbb/common_bufsiz.o
   CC      miscutils/conspy.o
   CC      miscutils/crond.o
-  CC      coreutils/env.o
-  CC      networking/udhcp/common.o
-  CC      loginutils/sulogin.o
-  CC      networking/ether-wake.o
-  CC      coreutils/expand.o
-  CC      coreutils/expr.o
-  CC      libbb/correct_password.o
-  CC      networking/libiproute/iptunnel.o
-  CC      coreutils/factor.o
-  CC      networking/libiproute/libnetlink.o
-  CC      networking/ftpd.o
-  CC      coreutils/false.o
-  CC      loginutils/vlock.o
-  CC      coreutils/fold.o
-  LD      printutils/built-in.o
-  CC      networking/ftpgetput.o
-  CC      printutils/lpd.o
-  CC      networking/udhcp/d6_dhcpc.o
   CC      networking/hostname.o
-  CC      libbb/crc32.o
-  CC      printutils/lpr.o
+  CC      networking/udhcp/d6_dhcpc.o
+  CC      coreutils/nice.o
   AR      loginutils/lib.a
-  CC      coreutils/head.o
-  CC      networking/libiproute/ll_addr.o
-  LD      procps/built-in.o
-  CC      networking/libiproute/ll_map.o
-  CC      miscutils/crontab.o
-  CC      procps/free.o
-  CC      libbb/default_error_retval.o
-  CC      libbb/device_open.o
-  CC      networking/udhcp/d6_packet.o
-  CC      networking/httpd.o
-  CC      coreutils/hostid.o
-  AR      printutils/lib.a
-  CC      miscutils/devmem.o
-  CC      libbb/dump.o
-  CC      miscutils/fbsplash.o
-  CC      networking/libiproute/ll_proto.o
-  CC      miscutils/hdparm.o
-  CC      coreutils/id.o
-  CC      procps/fuser.o
-  CC      networking/udhcp/d6_socket.o
-  CC      miscutils/hexedit.o
-  CC      procps/iostat.o
-  CC      coreutils/install.o
-  CC      networking/libiproute/ll_types.o
-  CC      libbb/duration.o
   LD      runit/built-in.o
+  CC      networking/httpd.o
   CC      runit/chpst.o
-  CC      miscutils/i2c_tools.o
+  CC      procps/fuser.o
+  CC      runit/runsv.o
+  AR      printutils/lib.a
+  CC      procps/iostat.o
+  CC      libbb/compare_string_array.o
+  CC      networking/udhcp/d6_packet.o
+  CC      miscutils/crontab.o
+  CC      coreutils/nl.o
+  CC      networking/udhcp/d6_socket.o
+  CC      networking/libiproute/iplink.o
+  LD      selinux/built-in.o
+  AR      selinux/lib.a
+  CC      libbb/concat_path_file.o
+  CC      runit/runsvdir.o
+  CC      networking/libiproute/ipneigh.o
+  CC      networking/libiproute/iproute.o
   CC      networking/udhcp/dhcpc.o
   CC      procps/kill.o
-  CC      libbb/endofname.o
-  CC      networking/libiproute/rt_names.o
+  CC      miscutils/devmem.o
+  CC      procps/lsof.o
+  CC      runit/sv.o
+  CC      coreutils/nohup.o
+  CC      miscutils/fbsplash.o
+  CC      libbb/concat_subpath_file.o
   CC      networking/ifconfig.o
-  CC      coreutils/link.o
-  CC      miscutils/less.o
+  CC      coreutils/nproc.o
+  CC      networking/libiproute/iprule.o
+  CC      libbb/const_hack.o
+  CC      libbb/copy_file.o
+  CC      miscutils/hdparm.o
+  CC      networking/libiproute/iptunnel.o
+  CC      coreutils/od.o
   CC      networking/udhcp/dhcpd.o
+  CC      procps/mpstat.o
+  LD      shell/built-in.o
+  CC      runit/svlogd.o
+  CC      shell/ash.o
+  CC      miscutils/hexedit.o
+  CC      networking/ifenslave.o
+  CC      coreutils/paste.o
+  CC      networking/udhcp/dhcprelay.o
+  CC      networking/ifplugd.o
+  LD      sysklogd/built-in.o
+  CC      sysklogd/klogd.o
+  CC      libbb/copyfd.o
+  CC      networking/libiproute/libnetlink.o
+  CC      networking/ifupdown.o
+  CC      sysklogd/logread.o
+  CC      procps/nmeter.o
+  CC      coreutils/printenv.o
+  CC      miscutils/i2c_tools.o
+  CC      networking/udhcp/domain_codec.o
+  CC      networking/udhcp/dumpleases.o
 miscutils/i2c_tools.c: In function 'list_i2c_busses_and_exit':
 miscutils/i2c_tools.c:1152:46: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 236 [-Wformat-truncation=]
  1152 |                 snprintf(path, NAME_MAX, "%s/%s/name",
@@ -1539,369 +1570,346 @@ miscutils/i2c_tools.c:1176:41: note: 'snprintf' output between 33 and 543 bytes 
       |                                                  ~~~~~~~~~~~~~~~~~~~~~~~~
  1179 |                                                  subde->d_name);
       |                                                  ~~~~~~~~~~~~~~
-  CC      runit/runsv.o
-  CC      miscutils/lsscsi.o
-  CC      coreutils/ln.o
-  CC      procps/lsof.o
-  LD      selinux/built-in.o
-  AR      selinux/lib.a
-  CC      networking/ifenslave.o
-  CC      networking/libiproute/rtm_map.o
-  CC      procps/mpstat.o
-  CC      coreutils/logname.o
-  CC      coreutils/ls.o
-  CC      coreutils/md5_sha1_sum.o
-  CC      libbb/executable.o
-  CC      procps/nmeter.o
-  CC      libbb/fclose_nonstdin.o
-  LD      shell/built-in.o
-  CC      coreutils/mkdir.o
-  CC      libbb/fflush_stdout_and_exit.o
+  CC      libbb/correct_password.o
+  CC      coreutils/printf.o
+  CC      sysklogd/syslogd_and_logger.o
+  AR      runit/lib.a
+  LD      util-linux/built-in.o
+  CC      coreutils/pwd.o
+  CC      libbb/crc32.o
+  CC      networking/libiproute/ll_addr.o
   CC      procps/pgrep.o
-  CC      shell/ash.o
-  CC      runit/runsvdir.o
-  CC      networking/ifplugd.o
-  CC      runit/sv.o
-  CC      networking/ifupdown.o
-  CC      shell/ash_ptr_hack.o
-  CC      libbb/fgets_str.o
-  CC      runit/svlogd.o
-  CC      miscutils/makedevs.o
-  LD      sysklogd/built-in.o
-  CC      networking/udhcp/dhcprelay.o
-  CC      coreutils/mkfifo.o
-  CC      sysklogd/klogd.o
-  CC      libbb/find_mount_point.o
-  CC      miscutils/man.o
-  CC      procps/pidof.o
-  CC      networking/udhcp/domain_codec.o
-  CC      coreutils/mknod.o
-  CC      networking/libiproute/utils.o
-  CC      coreutils/mktemp.o
-  CC      procps/pmap.o
+  CC      util-linux/acpid.o
+  CC      networking/udhcp/packet.o
   CC      networking/inetd.o
-  CC      networking/interface.o
-  CC      sysklogd/logread.o
+  LD      util-linux/volume_id/built-in.o
+  CC      shell/ash_ptr_hack.o
+  CC      util-linux/volume_id/bcache.o
+  CC      util-linux/blkdiscard.o
+  CC      miscutils/less.o
+  CC      networking/libiproute/ll_map.o
+  CC      util-linux/volume_id/btrfs.o
+  CC      coreutils/readlink.o
+  CC      util-linux/volume_id/cramfs.o
+  AR      sysklogd/lib.a
+  CC      libbb/default_error_retval.o
+  CC      procps/pidof.o
+  CC      util-linux/volume_id/erofs.o
+  CC      shell/cttyhack.o
+  CC      networking/udhcp/signalpipe.o
+  CC      util-linux/blkid.o
+  CC      procps/pmap.o
+  CC      shell/hush.o
+  CC      networking/libiproute/ll_proto.o
+  CC      coreutils/realpath.o
+  CC      util-linux/blockdev.o
   CC      procps/powertop.o
-  CC      libbb/find_pid_by_name.o
-  CC      miscutils/microcom.o
-  CC      procps/ps.o
-  CC      networking/ip.o
-  CC      procps/pstree.o
+  CC      util-linux/volume_id/exfat.o
+  CC      networking/interface.o
+  CC      libbb/device_open.o
+  CC      networking/udhcp/socket.o
+  CC      shell/match.o
 procps/powertop.c: In function 'read_cstate_counts':
+  CC      coreutils/rm.o
 procps/powertop.c:181:34: warning: '%s' directive writing up to 255 bytes into a region of size 171 [-Wformat-overflow=]
   181 |                 sprintf(buf, "%s/%s/power", "/proc/acpi/processor", d->d_name);
       |                                  ^~
 procps/powertop.c:181:17: note: 'sprintf' output between 28 and 283 bytes into a destination of size 192
   181 |                 sprintf(buf, "%s/%s/power", "/proc/acpi/processor", d->d_name);
       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  CC      networking/ipcalc.o
-  CC      networking/udhcp/dumpleases.o
-  AR      networking/libiproute/lib.a
-  CC      coreutils/mv.o
-  CC      shell/cttyhack.o
-  CC      sysklogd/syslogd_and_logger.o
-  CC      libbb/find_root_device.o
-  CC      miscutils/mt.o
-  AR      runit/lib.a
-  CC      shell/hush.o
-  CC      coreutils/nice.o
-  CC      libbb/full_write.o
-  CC      networking/isrv.o
-  CC      procps/pwdx.o
-  LD      util-linux/built-in.o
-  CC      libbb/get_console.o
-  CC      util-linux/acpid.o
-  CC      miscutils/nandwrite.o
-  CC      util-linux/blkdiscard.o
-  CC      libbb/get_cpu_count.o
-  CC      networking/isrv_identd.o
-  CC      coreutils/nl.o
-  CC      procps/smemcap.o
-  CC      miscutils/partprobe.o
-  CC      networking/udhcp/packet.o
-  CC      procps/sysctl.o
-  CC      procps/top.o
-  CC      procps/uptime.o
-  CC      networking/nameif.o
-  CC      util-linux/blkid.o
-  CC      procps/watch.o
-  CC      miscutils/raidautorun.o
-  AR      sysklogd/lib.a
-  CC      libbb/get_last_path_component.o
-  CC      networking/nbd-client.o
-  CC      util-linux/blockdev.o
+  CC      networking/libiproute/ll_types.o
   CC      util-linux/cal.o
-  CC      miscutils/readahead.o
-  CC      networking/udhcp/signalpipe.o
-  CC      libbb/get_line_from_file.o
-  CC      miscutils/runlevel.o
-  CC      shell/match.o
-  LD      util-linux/volume_id/built-in.o
-  CC      util-linux/volume_id/bcache.o
-  CC      networking/nc.o
-  CC      coreutils/nohup.o
-  CC      miscutils/rx.o
-  CC      networking/udhcp/socket.o
-  CC      libbb/get_shell_name.o
-  CC      coreutils/nproc.o
-  CC      libbb/get_volsize.o
-  CC      util-linux/volume_id/btrfs.o
-  CC      libbb/getopt32.o
-  CC      miscutils/seedrng.o
-  CC      util-linux/chrt.o
-  CC      coreutils/od.o
-  CC      libbb/getopt_allopts.o
-  AR      procps/lib.a
-  CC      util-linux/dmesg.o
-  CC      coreutils/paste.o
-  CC      networking/netstat.o
-  CC      util-linux/eject.o
-  CC      util-linux/volume_id/cramfs.o
+  CC      miscutils/lsscsi.o
+  CC      libbb/dump.o
+  CC      networking/libiproute/rt_names.o
   CC      shell/math.o
-  AR      networking/udhcp/lib.a
-  CC      shell/random.o
-  CC      coreutils/printenv.o
-  CC      networking/nslookup.o
-  CC      miscutils/setfattr.o
-  CC      coreutils/printf.o
-  CC      shell/shell_common.o
-  CC      libbb/getpty.o
-  CC      util-linux/fallocate.o
-  CC      libbb/hash_md5_sha.o
-  CC      util-linux/volume_id/erofs.o
-  CC      networking/ntpd.o
-  CC      miscutils/setserial.o
-  CC      networking/parse_pasv_epsv.o
-  CC      coreutils/pwd.o
-  CC      util-linux/fatattr.o
-  CC      miscutils/strings.o
-  CC      networking/ping.o
-  AS      libbb/hash_md5_sha256_x86-32_shaNI.o
-  CC      networking/pscan.o
-  CC      util-linux/volume_id/exfat.o
-  CC      coreutils/readlink.o
-  CC      coreutils/realpath.o
   CC      util-linux/volume_id/ext.o
-  AS      libbb/hash_md5_sha256_x86-64_shaNI.o
-  CC      util-linux/fbset.o
-  CC      util-linux/fdformat.o
-  CC      networking/route.o
-  CC      coreutils/rm.o
-  CC      miscutils/time.o
-  CC      util-linux/fdisk.o
+  CC      util-linux/chrt.o
+  AR      networking/udhcp/lib.a
+  CC      procps/ps.o
   CC      coreutils/rmdir.o
-  CC      networking/slattach.o
-  CC      coreutils/seq.o
-  CC      util-linux/findfs.o
-  CC      networking/ssl_client.o
-  AR      shell/lib.a
+  CC      shell/random.o
+  CC      networking/ip.o
+  CC      util-linux/dmesg.o
+  CC      networking/ipcalc.o
+  CC      networking/libiproute/rtm_map.o
   CC      util-linux/volume_id/f2fs.o
-  CC      networking/tc.o
-  AS      libbb/hash_md5_sha_x86-32_shaNI.o
-  CC      miscutils/tree.o
-  AS      libbb/hash_md5_sha_x86-64.o
-  CC      miscutils/ts.o
-  CC      networking/tcpudp.o
-  CC      miscutils/ttysize.o
-  AS      libbb/hash_md5_sha_x86-64_shaNI.o
+  CC      coreutils/seq.o
+  CC      miscutils/makedevs.o
+  CC      networking/libiproute/utils.o
+  CC      shell/shell_common.o
+  CC      libbb/duration.o
   CC      coreutils/shred.o
-  CC      miscutils/ubi_tools.o
-  CC      networking/tcpudp_perhost.o
-  CC      miscutils/ubirename.o
-  CC      networking/telnet.o
+  CC      networking/isrv.o
+  CC      procps/pstree.o
+  CC      util-linux/eject.o
   CC      util-linux/volume_id/fat.o
-  CC      libbb/herror_msg.o
-  CC      util-linux/flock.o
-  CC      miscutils/volname.o
-  CC      networking/telnetd.o
-  CC      networking/tftp.o
-  CC      networking/tls.o
-  CC      miscutils/watchdog.o
-  CC      coreutils/shuf.o
   CC      util-linux/volume_id/get_devname.o
-  CC      util-linux/freeramdisk.o
+  CC      procps/pwdx.o
+  CC      miscutils/man.o
   CC      util-linux/volume_id/hfs.o
-  CC      networking/tls_aes.o
-  CC      coreutils/sleep.o
-  CC      libbb/human_readable.o
-  CC      networking/tls_aesgcm.o
-  CC      libbb/in_ether.o
-  CC      networking/tls_fe.o
-  CC      util-linux/fsck_minix.o
-  CC      networking/tls_pstm.o
-  CC      networking/tls_pstm_montgomery_reduce.o
-  CC      coreutils/sort.o
-  CC      networking/tls_pstm_mul_comba.o
-  AR      miscutils/lib.a
+  CC      libbb/endofname.o
+  AR      networking/libiproute/lib.a
+  CC      coreutils/shuf.o
+  CC      util-linux/fallocate.o
+  CC      util-linux/fatattr.o
+  CC      miscutils/microcom.o
+  CC      libbb/executable.o
+  CC      libbb/fclose_nonstdin.o
+  CC      networking/isrv_identd.o
+  CC      procps/smemcap.o
+  CC      miscutils/mt.o
   CC      util-linux/volume_id/iso9660.o
-  CC      coreutils/split.o
-  CC      libbb/inet_cksum.o
+  CC      coreutils/sleep.o
+  CC      util-linux/fbset.o
+  CC      miscutils/nandwrite.o
+  CC      procps/sysctl.o
   CC      util-linux/volume_id/jfs.o
-  CC      networking/tls_pstm_sqr_comba.o
-  CC      networking/tls_rsa.o
+  CC      libbb/fflush_stdout_and_exit.o
+  CC      networking/nameif.o
+  CC      coreutils/sort.o
+  CC      coreutils/split.o
+  CC      miscutils/partprobe.o
+  CC      miscutils/raidautorun.o
+  CC      miscutils/readahead.o
+  CC      libbb/fgets_str.o
   CC      util-linux/volume_id/lfs.o
-  CC      networking/tls_sp_c32.o
+  CC      procps/top.o
+  CC      util-linux/fdformat.o
+  CC      networking/nbd-client.o
+  CC      libbb/find_mount_point.o
+  CC      util-linux/fdisk.o
   CC      util-linux/volume_id/linux_raid.o
+  CC      libbb/find_pid_by_name.o
+  CC      miscutils/runlevel.o
+  CC      libbb/find_root_device.o
   CC      coreutils/stat.o
-  CC      libbb/inet_common.o
-  CC      libbb/inode_hash.o
-  CC      coreutils/stty.o
-  CC      coreutils/sum.o
-  CC      networking/traceroute.o
-  CC      networking/tunctl.o
-  CC      libbb/isdirectory.o
-  CC      coreutils/sync.o
-  CC      networking/vconfig.o
-  CC      coreutils/tac.o
-  CC      networking/wget.o
-  CC      coreutils/tail.o
-  CC      util-linux/fsfreeze.o
   CC      util-linux/volume_id/linux_swap.o
-  CC      coreutils/tee.o
-  CC      util-linux/fstrim.o
-  CC      coreutils/test.o
-  CC      networking/whois.o
-  CC      libbb/isqrt.o
-  CC      util-linux/getopt.o
-  CC      networking/zcip.o
+  CC      coreutils/stty.o
+  CC      networking/nc.o
+  CC      libbb/full_write.o
+  CC      procps/uptime.o
+  CC      util-linux/findfs.o
+  CC      procps/watch.o
+  CC      miscutils/rx.o
   CC      util-linux/volume_id/luks.o
-  CC      coreutils/test_ptr_hack.o
-  CC      util-linux/hexdump.o
-  CC      coreutils/timeout.o
+  CC      miscutils/seedrng.o
+  CC      libbb/get_console.o
+  CC      networking/netstat.o
+  CC      util-linux/flock.o
+  CC      libbb/get_cpu_count.o
   CC      util-linux/volume_id/minix.o
-  CC      coreutils/touch.o
-  CC      coreutils/tr.o
+  CC      miscutils/setfattr.o
+  AR      procps/lib.a
+  CC      libbb/get_last_path_component.o
+  CC      libbb/get_line_from_file.o
   CC      util-linux/volume_id/nilfs.o
-  CC      util-linux/hexdump_xxd.o
-  CC      libbb/iterate_on_dir.o
-  CC      libbb/kernel_version.o
+  CC      util-linux/freeramdisk.o
+  CC      util-linux/fsck_minix.o
+  CC      libbb/get_shell_name.o
+  CC      coreutils/sum.o
   CC      util-linux/volume_id/ntfs.o
+  AR      shell/lib.a
+  CC      coreutils/sync.o
+  CC      networking/nslookup.o
+  CC      coreutils/tac.o
+  CC      miscutils/setserial.o
+  CC      networking/ntpd.o
+  CC      util-linux/fsfreeze.o
+  CC      libbb/get_volsize.o
+  CC      libbb/getopt32.o
+  CC      libbb/getopt_allopts.o
   CC      util-linux/volume_id/ocfs2.o
-  CC      libbb/last_char_is.o
+  CC      util-linux/fstrim.o
+  CC      networking/parse_pasv_epsv.o
+  CC      coreutils/tail.o
   CC      util-linux/volume_id/reiserfs.o
-  CC      coreutils/true.o
-  CC      coreutils/tsort.o
-  CC      coreutils/truncate.o
+  CC      miscutils/strings.o
+  CC      coreutils/tee.o
+  CC      libbb/getpty.o
+  CC      util-linux/getopt.o
+  CC      miscutils/time.o
+  CC      util-linux/hexdump.o
+  CC      miscutils/tree.o
+  CC      util-linux/hexdump_xxd.o
   CC      util-linux/hwclock.o
+  CC      networking/ping.o
   CC      util-linux/volume_id/romfs.o
+  CC      miscutils/ts.o
+  CC      libbb/hash_md5_sha.o
+  CC      miscutils/ttysize.o
+  CC      coreutils/test.o
   CC      util-linux/ionice.o
+  CC      util-linux/volume_id/squashfs.o
+  AS      libbb/hash_md5_sha256_x86-32_shaNI.o
+  CC      util-linux/ipcrm.o
+  CC      util-linux/ipcs.o
+  AS      libbb/hash_md5_sha256_x86-64_shaNI.o
+  CC      coreutils/test_ptr_hack.o
+  CC      util-linux/volume_id/sysv.o
+  CC      networking/pscan.o
+  CC      util-linux/last_fancy.o
+  CC      util-linux/volume_id/ubifs.o
+  AS      libbb/hash_md5_sha_x86-32_shaNI.o
+  CC      miscutils/ubi_tools.o
+  CC      coreutils/timeout.o
+  CC      networking/route.o
+  CC      util-linux/losetup.o
+  AS      libbb/hash_md5_sha_x86-64.o
+  CC      miscutils/ubirename.o
+  AS      libbb/hash_md5_sha_x86-64_shaNI.o
+  CC      miscutils/volname.o
+  CC      networking/slattach.o
+  CC      coreutils/touch.o
+  CC      networking/ssl_client.o
+  CC      util-linux/volume_id/udf.o
+  CC      util-linux/lspci.o
+  CC      util-linux/volume_id/util.o
+  CC      libbb/herror_msg.o
+  CC      networking/tc.o
+  CC      miscutils/watchdog.o
+  CC      util-linux/volume_id/volume_id.o
+  CC      libbb/human_readable.o
+  CC      util-linux/lsusb.o
+  CC      libbb/in_ether.o
+  CC      util-linux/volume_id/xfs.o
+  CC      coreutils/tr.o
+  CC      networking/tcpudp.o
+  CC      coreutils/true.o
+  CC      libbb/inet_cksum.o
+  AR      miscutils/lib.a
+  CC      networking/tcpudp_perhost.o
+  CC      libbb/inet_common.o
+  CC      util-linux/mdev.o
+  CC      libbb/inode_hash.o
+  CC      coreutils/truncate.o
+  CC      libbb/isdirectory.o
+  CC      util-linux/mesg.o
+  CC      libbb/isqrt.o
+  CC      libbb/iterate_on_dir.o
+  AR      util-linux/volume_id/lib.a
+  CC      libbb/kernel_version.o
+  CC      networking/telnet.o
   CC      coreutils/tty.o
+  CC      coreutils/tsort.o
+  CC      util-linux/mkfs_ext2.o
+  CC      libbb/last_char_is.o
   CC      coreutils/uname.o
   CC      libbb/lineedit.o
-  AR      networking/lib.a
   CC      coreutils/uniq.o
-  CC      util-linux/volume_id/squashfs.o
-  CC      coreutils/unlink.o
-  CC      libbb/lineedit_ptr_hack.o
-  CC      coreutils/usleep.o
-  CC      util-linux/ipcrm.o
-  CC      libbb/llist.o
-  CC      libbb/logenv.o
-  CC      util-linux/ipcs.o
-  CC      libbb/login.o
-  CC      coreutils/uudecode.o
-  CC      libbb/loop.o
-  CC      coreutils/uuencode.o
-  CC      libbb/make_directory.o
-  CC      coreutils/wc.o
-  CC      util-linux/volume_id/sysv.o
-  CC      util-linux/last_fancy.o
-  CC      util-linux/losetup.o
-  CC      util-linux/volume_id/ubifs.o
-  CC      util-linux/lspci.o
-  CC      util-linux/volume_id/udf.o
-  CC      util-linux/lsusb.o
-  CC      util-linux/mdev.o
-  CC      coreutils/who.o
-  CC      coreutils/whoami.o
-  CC      util-linux/mesg.o
-  CC      libbb/makedev.o
-  CC      coreutils/yes.o
-  CC      util-linux/volume_id/util.o
   CC      util-linux/mkfs_minix.o
-  CC      util-linux/mkfs_ext2.o
-  CC      libbb/messages.o
-  CC      util-linux/volume_id/volume_id.o
-  CC      libbb/match_fstype.o
+  CC      libbb/lineedit_ptr_hack.o
+  CC      networking/telnetd.o
+  CC      libbb/llist.o
+  CC      coreutils/unlink.o
+  CC      coreutils/usleep.o
+  CC      networking/tftp.o
+  CC      networking/tls.o
+  CC      coreutils/uuencode.o
+  CC      coreutils/uudecode.o
+  CC      networking/tls_aes.o
+  CC      networking/tls_aesgcm.o
+  CC      coreutils/wc.o
+  CC      libbb/logenv.o
   CC      util-linux/mkfs_vfat.o
-  CC      libbb/missing_syscalls.o
-  CC      util-linux/volume_id/xfs.o
-  CC      libbb/mode_string.o
-  CC      libbb/nuke_str.o
+  CC      networking/tls_fe.o
+  CC      coreutils/who.o
   CC      util-linux/mkswap.o
-  CC      libbb/obscure.o
   CC      util-linux/more.o
+  CC      coreutils/whoami.o
+  CC      networking/tls_pstm.o
+  CC      coreutils/yes.o
+  CC      networking/tls_pstm_montgomery_reduce.o
+  CC      libbb/login.o
   CC      util-linux/mount.o
-  CC      libbb/parse_config.o
+  CC      networking/tls_pstm_mul_comba.o
+  CC      libbb/loop.o
+  CC      libbb/make_directory.o
   CC      util-linux/mountpoint.o
-  AR      coreutils/lib.a
+  CC      libbb/makedev.o
+  CC      networking/tls_pstm_sqr_comba.o
+  CC      libbb/match_fstype.o
+  CC      networking/tls_rsa.o
   CC      util-linux/nsenter.o
+  CC      libbb/messages.o
+  CC      networking/tls_sp_c32.o
   CC      util-linux/pivot_root.o
-  CC      libbb/parse_mode.o
-  CC      libbb/percent_decode.o
-  AR      util-linux/volume_id/lib.a
+  CC      networking/traceroute.o
+  AR      coreutils/lib.a
   CC      util-linux/rdate.o
-  CC      libbb/perror_msg.o
   CC      util-linux/rdev.o
+  CC      libbb/mode_string.o
+  CC      libbb/missing_syscalls.o
+  CC      networking/tunctl.o
+  CC      networking/vconfig.o
+  CC      networking/wget.o
+  CC      libbb/nuke_str.o
   CC      util-linux/readprofile.o
+  CC      libbb/obscure.o
+  CC      networking/whois.o
   CC      util-linux/renice.o
-  CC      libbb/perror_nomsg.o
   CC      util-linux/rev.o
+  CC      networking/zcip.o
   CC      util-linux/rtcwake.o
+  CC      libbb/parse_config.o
+  CC      libbb/parse_mode.o
+  CC      util-linux/scriptreplay.o
   CC      util-linux/script.o
+  CC      util-linux/setarch.o
+  CC      libbb/percent_decode.o
+  CC      libbb/perror_msg.o
+  CC      util-linux/setpriv.o
+  CC      libbb/perror_nomsg.o
+  CC      util-linux/setsid.o
   CC      libbb/perror_nomsg_and_die.o
   CC      libbb/pidfile.o
-  CC      util-linux/scriptreplay.o
   CC      libbb/platform.o
+  CC      util-linux/swaponoff.o
+  CC      util-linux/switch_root.o
   CC      libbb/print_flags.o
+  CC      util-linux/taskset.o
   CC      libbb/print_numbered_lines.o
+  CC      util-linux/uevent.o
+  AR      networking/lib.a
+  CC      util-linux/umount.o
   CC      libbb/printable.o
-  CC      util-linux/setarch.o
+  CC      util-linux/unshare.o
   CC      libbb/printable_string.o
-  CC      util-linux/setpriv.o
   CC      libbb/process_escape_sequence.o
+  CC      util-linux/wall.o
   CC      libbb/procps.o
   CC      libbb/progress.o
-  CC      util-linux/setsid.o
   CC      libbb/ptr_to_globals.o
-  CC      util-linux/swaponoff.o
   CC      libbb/pw_encrypt.o
-  CC      util-linux/switch_root.o
-  CC      util-linux/taskset.o
-  CC      libbb/read.o
-  CC      util-linux/uevent.o
-  CC      util-linux/umount.o
-  CC      util-linux/unshare.o
   CC      libbb/read_key.o
+  CC      libbb/read.o
   CC      libbb/read_printf.o
   CC      libbb/recursive_action.o
-  CC      util-linux/wall.o
-  CC      libbb/replace.o
   CC      libbb/remove_file.o
+  CC      libbb/replace.o
   CC      libbb/rtc.o
   CC      libbb/run_shell.o
   CC      libbb/safe_gethostname.o
   CC      libbb/safe_poll.o
   CC      libbb/safe_strncpy.o
   CC      libbb/safe_write.o
-  CC      libbb/securetty.o
   AR      util-linux/lib.a
+  CC      libbb/securetty.o
   CC      libbb/setup_environment.o
   CC      libbb/signals.o
   CC      libbb/simplify_path.o
   CC      libbb/single_argv.o
   CC      libbb/skip_whitespace.o
-  CC      libbb/speed_table.o
   CC      libbb/str_tolower.o
+  CC      libbb/speed_table.o
   CC      libbb/strrstr.o
   CC      libbb/sysconf.o
   CC      libbb/time.o
   CC      libbb/trim.o
   CC      libbb/u_signal_names.o
   CC      libbb/ubi.o
-  CC      libbb/udp_io.o
   CC      libbb/unicode.o
+  CC      libbb/udp_io.o
   CC      libbb/update_passwd.o
   CC      libbb/utmp.o
   CC      libbb/uuencode.o
@@ -1931,3 +1939,4 @@ Trying libraries: crypt m resolv rt
  Library m is needed, can't exclude it (yet)
  Library resolv is needed, can't exclude it (yet)
 Final link with: m resolv
+make[1]: Leaving directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
