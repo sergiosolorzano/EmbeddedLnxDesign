@@ -1,3 +1,4 @@
+Distclean Busybox
   CLEAN   applets
   CLEAN   scripts/basic
   CLEAN   scripts/kconfig
@@ -5,7 +6,7 @@
   CLEAN   busybox busybox_unstripped busybox_unstripped.map busybox_unstripped.out busybox.links .kernelrelease
   CLEAN   include/config
   CLEAN   .config include/NUM_APPLETS.h include/common_bufsiz.h include/autoconf.h include/bbconfigopts.h include/bbconfigopts_bz2.h include/embedded_scripts.h include/usage_compressed.h include/applet_tables.h include/applets.h include/usage.h
-make[1]: Entering directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
+Configure busybox with crosscompile /usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-
   HOSTCC  scripts/basic/fixdep
   GEN     include/applets.h
   HOSTCC  scripts/basic/split-include
@@ -1226,8 +1227,9 @@ syslogd (13 kb) (SYSLOGD) [Y/n/?] (NEW) y
   Circular Buffer support (FEATURE_IPC_SYSLOG) [Y/n/?] (NEW) y
     Circular buffer size in Kbytes (minimum 4KB) (FEATURE_IPC_SYSLOG_BUFFER_SIZE) [16] (NEW) 16
   Linux kernel printk buffer support (FEATURE_KMSG_SYSLOG) [Y/n/?] (NEW) y
-make[1]: Leaving directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
-make[1]: Entering directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
+ 
+ 
+Cross compile busybox
   SPLIT   include/autoconf.h -> include/config/*
   GEN     include/bbconfigopts.h
   GEN     include/common_bufsiz.h
@@ -1253,282 +1255,249 @@ applets/usage.c:52:17: warning: ignoring return value of ‘write’ declared wi
   CC      archival/bzip2.o
   CC      archival/chksum_and_xwrite_tar_header.o
   CC      archival/cpio.o
+  LD      archival/libarchive/built-in.o
   CC      archival/dpkg.o
+  CC      archival/libarchive/common.o
+  CC      archival/libarchive/data_align.o
   CC      archival/dpkg_deb.o
   CC      archival/gzip.o
-  LD      archival/libarchive/built-in.o
-  CC      archival/lzop.o
-  CC      archival/libarchive/data_align.o
-  CC      archival/libarchive/common.o
-  CC      archival/rpm.o
   CC      archival/libarchive/data_extract_all.o
-  CC      archival/tar.o
+  CC      archival/libarchive/data_extract_to_stdout.o
+  CC      archival/libarchive/data_extract_to_command.o
+  CC      archival/lzop.o
   LD      console-tools/built-in.o
   CC      console-tools/chvt.o
-  CC      archival/libarchive/data_extract_to_command.o
   CC      console-tools/clear.o
-  CC      archival/libarchive/data_extract_to_stdout.o
+  CC      archival/rpm.o
   CC      archival/libarchive/data_skip.o
-  CC      archival/unzip.o
-  CC      archival/libarchive/decompress_bunzip2.o
   CC      console-tools/deallocvt.o
-  CC      archival/libarchive/decompress_gunzip.o
-  LD      coreutils/built-in.o
+  CC      archival/tar.o
   CC      console-tools/dumpkmap.o
-  CC      coreutils/basename.o
   CC      console-tools/fgconsole.o
+  CC      archival/unzip.o
   CC      console-tools/kbd_mode.o
+  CC      archival/libarchive/decompress_bunzip2.o
   CC      console-tools/loadfont.o
-  LD      coreutils/libcoreutils/built-in.o
-  CC      console-tools/loadkmap.o
-  CC      coreutils/libcoreutils/cp_mv_stat.o
-  CC      console-tools/openvt.o
-  CC      coreutils/libcoreutils/getopt_mk_fifo_nod.o
-  CC      archival/libarchive/decompress_unlzma.o
-  CC      console-tools/reset.o
+  LD      coreutils/built-in.o
+  CC      coreutils/basename.o
   CC      coreutils/cat.o
+  CC      archival/libarchive/decompress_gunzip.o
+  CC      archival/libarchive/decompress_unlzma.o
+  CC      console-tools/loadkmap.o
+  CC      coreutils/chgrp.o
+  LD      coreutils/libcoreutils/built-in.o
+  CC      coreutils/libcoreutils/cp_mv_stat.o
+  CC      coreutils/chmod.o
+  CC      console-tools/openvt.o
+  CC      console-tools/reset.o
+  CC      coreutils/chown.o
+  CC      archival/libarchive/decompress_unxz.o
+  LD      debianutils/built-in.o
+  CC      debianutils/pipe_progress.o
+  CC      coreutils/chroot.o
   CC      console-tools/resize.o
   CC      console-tools/setconsole.o
-  LD      debianutils/built-in.o
-  CC      archival/libarchive/decompress_unxz.o
-  CC      console-tools/setkeycodes.o
-  AR      archival/lib.a
-  CC      debianutils/pipe_progress.o
-  CC      console-tools/setlogcons.o
-  AR      coreutils/libcoreutils/lib.a
-  CC      archival/libarchive/filter_accept_all.o
-  CC      coreutils/chgrp.o
-  CC      console-tools/showkey.o
-  CC      coreutils/chmod.o
-  CC      debianutils/run_parts.o
-  CC      coreutils/chroot.o
-  CC      archival/libarchive/filter_accept_list.o
-  CC      coreutils/chown.o
-  CC      coreutils/cksum.o
   LD      klibc-utils/built-in.o
-  CC      archival/libarchive/filter_accept_list_reassign.o
-  CC      coreutils/comm.o
   CC      klibc-utils/resume.o
-  LD      e2fsprogs/built-in.o
-  AR      console-tools/lib.a
-  CC      e2fsprogs/chattr.o
-  CC      archival/libarchive/filter_accept_reject_list.o
-  CC      debianutils/start_stop_daemon.o
+  AR      archival/lib.a
+  CC      coreutils/cksum.o
+  CC      console-tools/setkeycodes.o
+  CC      coreutils/libcoreutils/getopt_mk_fifo_nod.o
+  CC      coreutils/comm.o
+  CC      debianutils/run_parts.o
   CC      coreutils/cp.o
-  CC      coreutils/cut.o
-  CC      coreutils/date.o
-  CC      coreutils/dd.o
-  CC      archival/libarchive/find_list_entry.o
-  CC      debianutils/which.o
-  CC      archival/libarchive/get_header_ar.o
-  LD      editors/built-in.o
+  CC      archival/libarchive/filter_accept_all.o
+  CC      debianutils/start_stop_daemon.o
   AR      klibc-utils/lib.a
-  CC      editors/awk.o
+  LD      e2fsprogs/built-in.o
+  CC      coreutils/cut.o
+  CC      console-tools/setlogcons.o
+  CC      e2fsprogs/chattr.o
+  CC      coreutils/date.o
+  CC      archival/libarchive/filter_accept_list.o
+  CC      console-tools/showkey.o
+  AR      coreutils/libcoreutils/lib.a
+  CC      debianutils/which.o
+  CC      archival/libarchive/filter_accept_list_reassign.o
+  CC      coreutils/dd.o
+  CC      archival/libarchive/filter_accept_reject_list.o
   CC      e2fsprogs/e2fs_lib.o
-  CC      editors/cmp.o
+  CC      e2fsprogs/fsck.o
+  LD      editors/built-in.o
+  CC      editors/awk.o
+  CC      archival/libarchive/find_list_entry.o
+  CC      e2fsprogs/lsattr.o
+  AR      console-tools/lib.a
+  CC      archival/libarchive/get_header_ar.o
   CC      coreutils/df.o
   CC      archival/libarchive/get_header_cpio.o
-  CC      archival/libarchive/get_header_tar.o
-  CC      archival/libarchive/get_header_tar_bz2.o
-  CC      archival/libarchive/get_header_tar_gz.o
-  AR      debianutils/lib.a
-  CC      editors/diff.o
   CC      coreutils/dirname.o
-  CC      e2fsprogs/fsck.o
+  CC      editors/cmp.o
+  LD      findutils/built-in.o
+  CC      archival/libarchive/get_header_tar.o
+  AR      debianutils/lib.a
+  CC      findutils/find.o
+  CC      archival/libarchive/get_header_tar_bz2.o
+  CC      coreutils/dos2unix.o
+  CC      archival/libarchive/get_header_tar_gz.o
+  CC      editors/diff.o
+  CC      coreutils/du.o
+  CC      editors/ed.o
+  CC      coreutils/echo.o
   CC      archival/libarchive/get_header_tar_lzma.o
   CC      archival/libarchive/get_header_tar_xz.o
-  CC      coreutils/dos2unix.o
-  CC      coreutils/du.o
-  LD      findutils/built-in.o
-  CC      editors/ed.o
-  CC      e2fsprogs/lsattr.o
-  CC      findutils/find.o
-  CC      coreutils/echo.o
-  CC      archival/libarchive/header_skip.o
-  CC      archival/libarchive/header_list.o
-  CC      editors/patch.o
-  CC      editors/sed.o
-  CC      archival/libarchive/header_verbose_list.o
+  AR      e2fsprogs/lib.a
   LD      init/built-in.o
-  CC      archival/libarchive/init_handle.o
+  CC      archival/libarchive/header_list.o
+  CC      archival/libarchive/header_skip.o
+  CC      editors/patch.o
   CC      coreutils/env.o
   CC      init/bootchartd.o
-  CC      init/halt.o
-  CC      editors/vi.o
-  AR      e2fsprogs/lib.a
-  CC      coreutils/expand.o
-  CC      init/init.o
-  CC      archival/libarchive/lzo1x_1.o
-  LD      libbb/built-in.o
+  CC      archival/libarchive/header_verbose_list.o
   CC      findutils/grep.o
-  CC      libbb/appletlib.o
   CC      findutils/xargs.o
+  CC      editors/sed.o
+  CC      coreutils/expand.o
   CC      coreutils/expr.o
-  CC      archival/libarchive/lzo1x_1o.o
-  CC      libbb/ask_confirmation.o
-  CC      libbb/auto_string.o
-  LD      libpwdgrp/built-in.o
+  CC      archival/libarchive/init_handle.o
+  CC      editors/vi.o
   CC      coreutils/factor.o
-  CC      libpwdgrp/pwd_grp.o
-  AR      init/lib.a
-  LD      loginutils/built-in.o
-  CC      libpwdgrp/uidgid_get.o
-  AR      findutils/lib.a
-  CC      loginutils/add-remove-shell.o
   CC      coreutils/false.o
-  CC      libbb/bb_askpass.o
+  CC      init/halt.o
+  CC      archival/libarchive/lzo1x_1.o
+  CC      init/init.o
+  LD      libbb/built-in.o
+  CC      archival/libarchive/lzo1x_1o.o
+  CC      libbb/appletlib.o
   CC      coreutils/fold.o
   CC      archival/libarchive/lzo1x_d.o
+  AR      findutils/lib.a
+  CC      libbb/ask_confirmation.o
   CC      coreutils/head.o
   CC      archival/libarchive/open_transformer.o
-  CC      loginutils/addgroup.o
-  CC      archival/libarchive/seek_by_jump.o
-  CC      archival/libarchive/seek_by_read.o
-  LD      mailutils/built-in.o
-  CC      mailutils/mail.o
-  CC      archival/libarchive/unpack_ar_archive.o
-  CC      mailutils/makemime.o
-  AR      libpwdgrp/lib.a
-  CC      mailutils/popmaildir.o
-  CC      coreutils/hostid.o
-  CC      loginutils/adduser.o
-  LD      miscutils/built-in.o
+  CC      libbb/auto_string.o
   CC      libbb/bb_bswap_64.o
-  CC      mailutils/reformime.o
+  CC      libbb/bb_askpass.o
+  LD      libpwdgrp/built-in.o
+  CC      libpwdgrp/pwd_grp.o
+  CC      libpwdgrp/uidgid_get.o
+  CC      archival/libarchive/seek_by_jump.o
+  CC      coreutils/hostid.o
+  CC      archival/libarchive/seek_by_read.o
+  LD      loginutils/built-in.o
   CC      coreutils/id.o
-  CC      miscutils/adjtimex.o
-  CC      archival/libarchive/unsafe_prefix.o
-  CC      coreutils/install.o
-  CC      miscutils/ascii.o
-  CC      loginutils/chpasswd.o
+  AR      init/lib.a
+  CC      loginutils/add-remove-shell.o
+  CC      archival/libarchive/unpack_ar_archive.o
+  CC      loginutils/addgroup.o
   CC      libbb/bb_cat.o
-  LD      modutils/built-in.o
+  CC      libbb/bb_do_delay.o
+  CC      loginutils/adduser.o
+  CC      loginutils/chpasswd.o
+  CC      libbb/bb_getgroups.o
+  CC      libbb/bb_getsockname.o
+  CC      loginutils/cryptpw.o
+  LD      mailutils/built-in.o
+  CC      libbb/bb_pwd.o
+  CC      mailutils/mail.o
+  CC      coreutils/install.o
+  AR      libpwdgrp/lib.a
+  CC      archival/libarchive/unsafe_prefix.o
+  CC      coreutils/link.o
+  CC      coreutils/ln.o
+  CC      libbb/bb_qsort.o
+  CC      coreutils/logname.o
+  CC      archival/libarchive/unsafe_symlink_target.o
+  CC      coreutils/ls.o
+  CC      loginutils/deluser.o
+  CC      coreutils/md5_sha1_sum.o
+  CC      libbb/bb_strtonum.o
+  CC      coreutils/mkdir.o
+  CC      coreutils/mkfifo.o
+  CC      loginutils/getty.o
+  CC      mailutils/makemime.o
+  LD      miscutils/built-in.o
+  CC      miscutils/adjtimex.o
+  CC      coreutils/mknod.o
+  CC      loginutils/login.o
+  AR      archival/libarchive/lib.a
+  CC      loginutils/passwd.o
+  CC      coreutils/mktemp.o
+  CC      loginutils/su.o
+  CC      libbb/capability.o
+  CC      mailutils/popmaildir.o
+  CC      mailutils/reformime.o
+  CC      loginutils/sulogin.o
+  CC      miscutils/ascii.o
+  CC      loginutils/vlock.o
   CC      miscutils/bc.o
   CC      miscutils/beep.o
+  LD      modutils/built-in.o
+  CC      libbb/change_identity.o
+  CC      libbb/chomp.o
+  CC      miscutils/chat.o
   CC      modutils/modinfo.o
+  CC      miscutils/conspy.o
+  CC      coreutils/mv.o
+  CC      miscutils/crond.o
   CC      mailutils/sendmail.o
-  CC      archival/libarchive/unsafe_symlink_target.o
-  LD      networking/built-in.o
-  CC      networking/arp.o
-  AR      editors/lib.a
-  CC      loginutils/cryptpw.o
+  CC      coreutils/nice.o
+  AR      loginutils/lib.a
+  CC      libbb/common_bufsiz.o
+  CC      miscutils/crontab.o
   CC      modutils/modprobe-small.o
-  CC      libbb/bb_do_delay.o
-  CC      coreutils/ln.o
-  CC      loginutils/deluser.o
-  CC      coreutils/link.o
+  LD      networking/built-in.o
   CC      modutils/modutils.o
-  CC      loginutils/getty.o
-  CC      libbb/bb_getgroups.o
-  CC      coreutils/logname.o
-  AR      archival/libarchive/lib.a
+  CC      libbb/compare_string_array.o
+  CC      miscutils/devmem.o
+  AR      editors/lib.a
+  CC      networking/arp.o
+  CC      coreutils/nl.o
+  CC      libbb/concat_path_file.o
+  CC      coreutils/nohup.o
+  CC      networking/arping.o
+  AR      mailutils/lib.a
 modutils/modutils.c: In function 'filename2modname':
 cc1: warning: function may return address of local variable [-Wreturn-local-addr]
 modutils/modutils.c:94:14: note: declared here
    94 |         char local_modname[MODULE_NAME_LEN];
       |              ^~~~~~~~~~~~~
-  CC      networking/arping.o
-  AR      mailutils/lib.a
-  CC      coreutils/ls.o
-  CC      coreutils/md5_sha1_sum.o
-  CC      libbb/bb_getsockname.o
-  CC      loginutils/login.o
   CC      networking/brctl.o
-  CC      libbb/bb_pwd.o
-  CC      coreutils/mkdir.o
-  CC      loginutils/passwd.o
-  AR      modutils/lib.a
-  CC      networking/dnsd.o
-  CC      libbb/bb_qsort.o
-  CC      networking/ether-wake.o
-  CC      loginutils/su.o
-  CC      libbb/bb_strtonum.o
+  CC      coreutils/nproc.o
   LD      networking/libiproute/built-in.o
-  CC      miscutils/chat.o
-  CC      libbb/capability.o
-  CC      loginutils/sulogin.o
   CC      networking/libiproute/ip_parse_common_args.o
-  CC      networking/ftpd.o
-  CC      networking/ftpgetput.o
-  CC      libbb/change_identity.o
+  CC      miscutils/fbsplash.o
+  CC      networking/dnsd.o
+  CC      coreutils/od.o
+  CC      libbb/concat_subpath_file.o
+  CC      networking/libiproute/ipaddress.o
   LD      networking/udhcp/built-in.o
-  CC      coreutils/mkfifo.o
+  CC      networking/libiproute/iplink.o
   CC      networking/udhcp/arpping.o
+  AR      modutils/lib.a
+  CC      coreutils/paste.o
+  CC      networking/ether-wake.o
+  CC      coreutils/printenv.o
+  CC      networking/ftpd.o
+  CC      libbb/const_hack.o
+  CC      networking/udhcp/common.o
+  CC      networking/libiproute/ipneigh.o
+  CC      miscutils/hdparm.o
+  CC      coreutils/printf.o
+  CC      networking/udhcp/d6_dhcpc.o
+  CC      miscutils/hexedit.o
+  CC      libbb/copy_file.o
+  CC      miscutils/i2c_tools.o
+  CC      coreutils/pwd.o
+  CC      networking/udhcp/d6_packet.o
+  CC      networking/ftpgetput.o
+  CC      networking/libiproute/iproute.o
+  CC      libbb/copyfd.o
   LD      printutils/built-in.o
   CC      printutils/lpd.o
-  CC      coreutils/mknod.o
-  CC      networking/udhcp/common.o
-  CC      coreutils/mktemp.o
-  LD      procps/built-in.o
-  CC      networking/libiproute/ipaddress.o
-  CC      loginutils/vlock.o
-  CC      coreutils/mv.o
-  CC      printutils/lpr.o
-  CC      libbb/chomp.o
-  CC      procps/free.o
-  CC      libbb/common_bufsiz.o
-  CC      miscutils/conspy.o
-  CC      miscutils/crond.o
+  CC      miscutils/less.o
+  CC      miscutils/lsscsi.o
   CC      networking/hostname.o
-  CC      networking/udhcp/d6_dhcpc.o
-  CC      coreutils/nice.o
-  AR      loginutils/lib.a
-  LD      runit/built-in.o
-  CC      networking/httpd.o
-  CC      runit/chpst.o
-  CC      procps/fuser.o
-  CC      runit/runsv.o
-  AR      printutils/lib.a
-  CC      procps/iostat.o
-  CC      libbb/compare_string_array.o
-  CC      networking/udhcp/d6_packet.o
-  CC      miscutils/crontab.o
-  CC      coreutils/nl.o
-  CC      networking/udhcp/d6_socket.o
-  CC      networking/libiproute/iplink.o
-  LD      selinux/built-in.o
-  AR      selinux/lib.a
-  CC      libbb/concat_path_file.o
-  CC      runit/runsvdir.o
-  CC      networking/libiproute/ipneigh.o
-  CC      networking/libiproute/iproute.o
-  CC      networking/udhcp/dhcpc.o
-  CC      procps/kill.o
-  CC      miscutils/devmem.o
-  CC      procps/lsof.o
-  CC      runit/sv.o
-  CC      coreutils/nohup.o
-  CC      miscutils/fbsplash.o
-  CC      libbb/concat_subpath_file.o
-  CC      networking/ifconfig.o
-  CC      coreutils/nproc.o
-  CC      networking/libiproute/iprule.o
-  CC      libbb/const_hack.o
-  CC      libbb/copy_file.o
-  CC      miscutils/hdparm.o
-  CC      networking/libiproute/iptunnel.o
-  CC      coreutils/od.o
-  CC      networking/udhcp/dhcpd.o
-  CC      procps/mpstat.o
-  LD      shell/built-in.o
-  CC      runit/svlogd.o
-  CC      shell/ash.o
-  CC      miscutils/hexedit.o
-  CC      networking/ifenslave.o
-  CC      coreutils/paste.o
-  CC      networking/udhcp/dhcprelay.o
-  CC      networking/ifplugd.o
-  LD      sysklogd/built-in.o
-  CC      sysklogd/klogd.o
-  CC      libbb/copyfd.o
-  CC      networking/libiproute/libnetlink.o
-  CC      networking/ifupdown.o
-  CC      sysklogd/logread.o
-  CC      procps/nmeter.o
-  CC      coreutils/printenv.o
-  CC      miscutils/i2c_tools.o
-  CC      networking/udhcp/domain_codec.o
-  CC      networking/udhcp/dumpleases.o
 miscutils/i2c_tools.c: In function 'list_i2c_busses_and_exit':
 miscutils/i2c_tools.c:1152:46: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 236 [-Wformat-truncation=]
  1152 |                 snprintf(path, NAME_MAX, "%s/%s/name",
@@ -1570,320 +1539,354 @@ miscutils/i2c_tools.c:1176:41: note: 'snprintf' output between 33 and 543 bytes 
       |                                                  ~~~~~~~~~~~~~~~~~~~~~~~~
  1179 |                                                  subde->d_name);
       |                                                  ~~~~~~~~~~~~~~
+  CC      networking/libiproute/iprule.o
   CC      libbb/correct_password.o
-  CC      coreutils/printf.o
-  CC      sysklogd/syslogd_and_logger.o
-  AR      runit/lib.a
-  LD      util-linux/built-in.o
-  CC      coreutils/pwd.o
   CC      libbb/crc32.o
-  CC      networking/libiproute/ll_addr.o
-  CC      procps/pgrep.o
-  CC      util-linux/acpid.o
-  CC      networking/udhcp/packet.o
-  CC      networking/inetd.o
-  LD      util-linux/volume_id/built-in.o
-  CC      shell/ash_ptr_hack.o
-  CC      util-linux/volume_id/bcache.o
-  CC      util-linux/blkdiscard.o
-  CC      miscutils/less.o
-  CC      networking/libiproute/ll_map.o
-  CC      util-linux/volume_id/btrfs.o
   CC      coreutils/readlink.o
-  CC      util-linux/volume_id/cramfs.o
-  AR      sysklogd/lib.a
-  CC      libbb/default_error_retval.o
-  CC      procps/pidof.o
-  CC      util-linux/volume_id/erofs.o
-  CC      shell/cttyhack.o
-  CC      networking/udhcp/signalpipe.o
-  CC      util-linux/blkid.o
-  CC      procps/pmap.o
-  CC      shell/hush.o
-  CC      networking/libiproute/ll_proto.o
   CC      coreutils/realpath.o
-  CC      util-linux/blockdev.o
-  CC      procps/powertop.o
-  CC      util-linux/volume_id/exfat.o
-  CC      networking/interface.o
-  CC      libbb/device_open.o
-  CC      networking/udhcp/socket.o
-  CC      shell/match.o
-procps/powertop.c: In function 'read_cstate_counts':
+  CC      printutils/lpr.o
+  CC      networking/libiproute/iptunnel.o
+  CC      networking/httpd.o
+  CC      networking/udhcp/d6_socket.o
+  CC      networking/ifconfig.o
+  CC      miscutils/makedevs.o
+  CC      networking/libiproute/libnetlink.o
+  CC      libbb/default_error_retval.o
+  CC      networking/udhcp/dhcpc.o
   CC      coreutils/rm.o
+  CC      libbb/device_open.o
+  CC      networking/libiproute/ll_addr.o
+  CC      networking/udhcp/dhcpd.o
+  AR      printutils/lib.a
+  CC      miscutils/man.o
+  CC      coreutils/rmdir.o
+  CC      networking/udhcp/dhcprelay.o
+  CC      libbb/dump.o
+  CC      networking/ifenslave.o
+  CC      networking/udhcp/domain_codec.o
+  CC      networking/libiproute/ll_map.o
+  CC      networking/libiproute/ll_proto.o
+  LD      procps/built-in.o
+  CC      libbb/duration.o
+  CC      procps/free.o
+  CC      coreutils/seq.o
+  CC      miscutils/microcom.o
+  CC      libbb/endofname.o
+  CC      coreutils/shred.o
+  CC      networking/ifplugd.o
+  CC      procps/fuser.o
+  CC      coreutils/shuf.o
+  CC      procps/iostat.o
+  CC      networking/udhcp/dumpleases.o
+  CC      coreutils/sleep.o
+  CC      networking/udhcp/packet.o
+  CC      networking/ifupdown.o
+  CC      miscutils/mt.o
+  CC      networking/libiproute/ll_types.o
+  CC      networking/inetd.o
+  LD      runit/built-in.o
+  CC      runit/chpst.o
+  CC      miscutils/nandwrite.o
+  CC      procps/kill.o
+  CC      networking/libiproute/rt_names.o
+  CC      coreutils/sort.o
+  CC      runit/runsv.o
+  CC      libbb/executable.o
+  CC      coreutils/split.o
+  CC      networking/udhcp/signalpipe.o
+  CC      miscutils/partprobe.o
+  CC      networking/libiproute/rtm_map.o
+  CC      networking/udhcp/socket.o
+  CC      procps/lsof.o
+  CC      libbb/fclose_nonstdin.o
+  LD      selinux/built-in.o
+  CC      runit/runsvdir.o
+  CC      runit/sv.o
+  CC      coreutils/stat.o
+  CC      networking/interface.o
+  AR      selinux/lib.a
+  CC      networking/ip.o
+  CC      libbb/fflush_stdout_and_exit.o
+  AR      networking/udhcp/lib.a
+  CC      miscutils/raidautorun.o
+  LD      shell/built-in.o
+  CC      coreutils/stty.o
+  CC      shell/ash.o
+  CC      networking/libiproute/utils.o
+  CC      procps/mpstat.o
+  CC      networking/ipcalc.o
+  CC      miscutils/readahead.o
+  CC      procps/nmeter.o
+  CC      coreutils/sum.o
+  CC      shell/ash_ptr_hack.o
+  CC      networking/isrv.o
+  CC      libbb/fgets_str.o
+  CC      runit/svlogd.o
+  CC      procps/pgrep.o
+  CC      miscutils/runlevel.o
+  CC      miscutils/rx.o
+  CC      shell/cttyhack.o
+  AR      networking/libiproute/lib.a
+  CC      shell/hush.o
+  CC      networking/isrv_identd.o
+  LD      sysklogd/built-in.o
+  CC      shell/match.o
+  CC      coreutils/sync.o
+  CC      shell/math.o
+  CC      libbb/find_mount_point.o
+  CC      sysklogd/klogd.o
+  CC      sysklogd/logread.o
+  CC      procps/pidof.o
+  CC      miscutils/seedrng.o
+  LD      util-linux/built-in.o
+  CC      networking/nameif.o
+  CC      util-linux/acpid.o
+  CC      libbb/find_pid_by_name.o
+  CC      util-linux/blkdiscard.o
+  AR      runit/lib.a
+  CC      networking/nbd-client.o
+  CC      util-linux/blkid.o
+  CC      coreutils/tac.o
+  CC      coreutils/tail.o
+  CC      sysklogd/syslogd_and_logger.o
+  CC      networking/nc.o
+  CC      procps/pmap.o
+  CC      miscutils/setfattr.o
+  CC      libbb/find_root_device.o
+  CC      coreutils/tee.o
+  LD      util-linux/volume_id/built-in.o
+  CC      coreutils/test.o
+  CC      util-linux/volume_id/bcache.o
+  CC      networking/netstat.o
+  CC      util-linux/blockdev.o
+  CC      shell/random.o
+  CC      networking/nslookup.o
+  CC      libbb/full_write.o
+  CC      miscutils/setserial.o
+  CC      procps/powertop.o
+  CC      util-linux/cal.o
+  CC      util-linux/volume_id/btrfs.o
+  AR      sysklogd/lib.a
+  CC      shell/shell_common.o
+  CC      procps/ps.o
+  CC      coreutils/test_ptr_hack.o
+procps/powertop.c: In function 'read_cstate_counts':
 procps/powertop.c:181:34: warning: '%s' directive writing up to 255 bytes into a region of size 171 [-Wformat-overflow=]
   181 |                 sprintf(buf, "%s/%s/power", "/proc/acpi/processor", d->d_name);
       |                                  ^~
 procps/powertop.c:181:17: note: 'sprintf' output between 28 and 283 bytes into a destination of size 192
   181 |                 sprintf(buf, "%s/%s/power", "/proc/acpi/processor", d->d_name);
       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  CC      networking/libiproute/ll_types.o
-  CC      util-linux/cal.o
-  CC      miscutils/lsscsi.o
-  CC      libbb/dump.o
-  CC      networking/libiproute/rt_names.o
-  CC      shell/math.o
-  CC      util-linux/volume_id/ext.o
-  CC      util-linux/chrt.o
-  AR      networking/udhcp/lib.a
-  CC      procps/ps.o
-  CC      coreutils/rmdir.o
-  CC      shell/random.o
-  CC      networking/ip.o
-  CC      util-linux/dmesg.o
-  CC      networking/ipcalc.o
-  CC      networking/libiproute/rtm_map.o
-  CC      util-linux/volume_id/f2fs.o
-  CC      coreutils/seq.o
-  CC      miscutils/makedevs.o
-  CC      networking/libiproute/utils.o
-  CC      shell/shell_common.o
-  CC      libbb/duration.o
-  CC      coreutils/shred.o
-  CC      networking/isrv.o
-  CC      procps/pstree.o
-  CC      util-linux/eject.o
-  CC      util-linux/volume_id/fat.o
-  CC      util-linux/volume_id/get_devname.o
-  CC      procps/pwdx.o
-  CC      miscutils/man.o
-  CC      util-linux/volume_id/hfs.o
-  CC      libbb/endofname.o
-  AR      networking/libiproute/lib.a
-  CC      coreutils/shuf.o
-  CC      util-linux/fallocate.o
-  CC      util-linux/fatattr.o
-  CC      miscutils/microcom.o
-  CC      libbb/executable.o
-  CC      libbb/fclose_nonstdin.o
-  CC      networking/isrv_identd.o
-  CC      procps/smemcap.o
-  CC      miscutils/mt.o
-  CC      util-linux/volume_id/iso9660.o
-  CC      coreutils/sleep.o
-  CC      util-linux/fbset.o
-  CC      miscutils/nandwrite.o
-  CC      procps/sysctl.o
-  CC      util-linux/volume_id/jfs.o
-  CC      libbb/fflush_stdout_and_exit.o
-  CC      networking/nameif.o
-  CC      coreutils/sort.o
-  CC      coreutils/split.o
-  CC      miscutils/partprobe.o
-  CC      miscutils/raidautorun.o
-  CC      miscutils/readahead.o
-  CC      libbb/fgets_str.o
-  CC      util-linux/volume_id/lfs.o
-  CC      procps/top.o
-  CC      util-linux/fdformat.o
-  CC      networking/nbd-client.o
-  CC      libbb/find_mount_point.o
-  CC      util-linux/fdisk.o
-  CC      util-linux/volume_id/linux_raid.o
-  CC      libbb/find_pid_by_name.o
-  CC      miscutils/runlevel.o
-  CC      libbb/find_root_device.o
-  CC      coreutils/stat.o
-  CC      util-linux/volume_id/linux_swap.o
-  CC      coreutils/stty.o
-  CC      networking/nc.o
-  CC      libbb/full_write.o
-  CC      procps/uptime.o
-  CC      util-linux/findfs.o
-  CC      procps/watch.o
-  CC      miscutils/rx.o
-  CC      util-linux/volume_id/luks.o
-  CC      miscutils/seedrng.o
   CC      libbb/get_console.o
-  CC      networking/netstat.o
-  CC      util-linux/flock.o
-  CC      libbb/get_cpu_count.o
-  CC      util-linux/volume_id/minix.o
-  CC      miscutils/setfattr.o
-  AR      procps/lib.a
-  CC      libbb/get_last_path_component.o
-  CC      libbb/get_line_from_file.o
-  CC      util-linux/volume_id/nilfs.o
-  CC      util-linux/freeramdisk.o
-  CC      util-linux/fsck_minix.o
-  CC      libbb/get_shell_name.o
-  CC      coreutils/sum.o
-  CC      util-linux/volume_id/ntfs.o
-  AR      shell/lib.a
-  CC      coreutils/sync.o
-  CC      networking/nslookup.o
-  CC      coreutils/tac.o
-  CC      miscutils/setserial.o
-  CC      networking/ntpd.o
-  CC      util-linux/fsfreeze.o
-  CC      libbb/get_volsize.o
-  CC      libbb/getopt32.o
-  CC      libbb/getopt_allopts.o
-  CC      util-linux/volume_id/ocfs2.o
-  CC      util-linux/fstrim.o
-  CC      networking/parse_pasv_epsv.o
-  CC      coreutils/tail.o
-  CC      util-linux/volume_id/reiserfs.o
   CC      miscutils/strings.o
-  CC      coreutils/tee.o
-  CC      libbb/getpty.o
-  CC      util-linux/getopt.o
-  CC      miscutils/time.o
-  CC      util-linux/hexdump.o
-  CC      miscutils/tree.o
-  CC      util-linux/hexdump_xxd.o
-  CC      util-linux/hwclock.o
-  CC      networking/ping.o
-  CC      util-linux/volume_id/romfs.o
-  CC      miscutils/ts.o
-  CC      libbb/hash_md5_sha.o
-  CC      miscutils/ttysize.o
-  CC      coreutils/test.o
-  CC      util-linux/ionice.o
-  CC      util-linux/volume_id/squashfs.o
-  AS      libbb/hash_md5_sha256_x86-32_shaNI.o
-  CC      util-linux/ipcrm.o
-  CC      util-linux/ipcs.o
-  AS      libbb/hash_md5_sha256_x86-64_shaNI.o
-  CC      coreutils/test_ptr_hack.o
-  CC      util-linux/volume_id/sysv.o
-  CC      networking/pscan.o
-  CC      util-linux/last_fancy.o
-  CC      util-linux/volume_id/ubifs.o
-  AS      libbb/hash_md5_sha_x86-32_shaNI.o
-  CC      miscutils/ubi_tools.o
+  CC      procps/pstree.o
+  CC      util-linux/volume_id/cramfs.o
   CC      coreutils/timeout.o
-  CC      networking/route.o
-  CC      util-linux/losetup.o
-  AS      libbb/hash_md5_sha_x86-64.o
-  CC      miscutils/ubirename.o
-  AS      libbb/hash_md5_sha_x86-64_shaNI.o
-  CC      miscutils/volname.o
-  CC      networking/slattach.o
+  CC      libbb/get_cpu_count.o
+  CC      procps/pwdx.o
+  CC      libbb/get_last_path_component.o
+  CC      networking/ntpd.o
+  CC      procps/smemcap.o
+  CC      util-linux/chrt.o
   CC      coreutils/touch.o
-  CC      networking/ssl_client.o
-  CC      util-linux/volume_id/udf.o
-  CC      util-linux/lspci.o
-  CC      util-linux/volume_id/util.o
-  CC      libbb/herror_msg.o
-  CC      networking/tc.o
-  CC      miscutils/watchdog.o
-  CC      util-linux/volume_id/volume_id.o
-  CC      libbb/human_readable.o
-  CC      util-linux/lsusb.o
-  CC      libbb/in_ether.o
-  CC      util-linux/volume_id/xfs.o
+  CC      util-linux/dmesg.o
+  CC      util-linux/volume_id/erofs.o
+  CC      miscutils/time.o
+  CC      networking/parse_pasv_epsv.o
+  CC      networking/ping.o
+  CC      networking/pscan.o
+  CC      util-linux/eject.o
+  CC      libbb/get_line_from_file.o
   CC      coreutils/tr.o
-  CC      networking/tcpudp.o
+  CC      procps/sysctl.o
+  CC      util-linux/volume_id/exfat.o
+  CC      miscutils/tree.o
+  CC      networking/route.o
+  CC      miscutils/ts.o
+  CC      util-linux/fallocate.o
+  CC      libbb/get_shell_name.o
+  CC      util-linux/volume_id/ext.o
+  CC      networking/slattach.o
+  CC      util-linux/fatattr.o
+  CC      libbb/get_volsize.o
+  CC      procps/top.o
   CC      coreutils/true.o
-  CC      libbb/inet_cksum.o
-  AR      miscutils/lib.a
-  CC      networking/tcpudp_perhost.o
-  CC      libbb/inet_common.o
-  CC      util-linux/mdev.o
-  CC      libbb/inode_hash.o
   CC      coreutils/truncate.o
-  CC      libbb/isdirectory.o
-  CC      util-linux/mesg.o
-  CC      libbb/isqrt.o
-  CC      libbb/iterate_on_dir.o
-  AR      util-linux/volume_id/lib.a
-  CC      libbb/kernel_version.o
-  CC      networking/telnet.o
-  CC      coreutils/tty.o
+  CC      miscutils/ttysize.o
+  CC      libbb/getopt32.o
   CC      coreutils/tsort.o
-  CC      util-linux/mkfs_ext2.o
-  CC      libbb/last_char_is.o
+  CC      util-linux/volume_id/f2fs.o
+  CC      util-linux/fbset.o
+  CC      util-linux/volume_id/fat.o
+  CC      networking/ssl_client.o
+  CC      networking/tc.o
+  CC      coreutils/tty.o
   CC      coreutils/uname.o
-  CC      libbb/lineedit.o
+  CC      util-linux/fdformat.o
+  CC      miscutils/ubi_tools.o
+  CC      util-linux/volume_id/get_devname.o
+  CC      libbb/getopt_allopts.o
   CC      coreutils/uniq.o
-  CC      util-linux/mkfs_minix.o
-  CC      libbb/lineedit_ptr_hack.o
-  CC      networking/telnetd.o
-  CC      libbb/llist.o
+  CC      libbb/getpty.o
+  CC      util-linux/volume_id/hfs.o
+  CC      libbb/hash_md5_sha.o
+  CC      util-linux/fdisk.o
+  CC      procps/uptime.o
+  CC      networking/tcpudp.o
+  AS      libbb/hash_md5_sha256_x86-32_shaNI.o
+  CC      util-linux/findfs.o
+  CC      networking/tcpudp_perhost.o
+  CC      procps/watch.o
+  AR      shell/lib.a
+  CC      networking/telnet.o
+  CC      miscutils/ubirename.o
+  AS      libbb/hash_md5_sha256_x86-64_shaNI.o
   CC      coreutils/unlink.o
-  CC      coreutils/usleep.o
+  CC      miscutils/volname.o
+  CC      util-linux/volume_id/iso9660.o
+  CC      util-linux/volume_id/jfs.o
+  CC      miscutils/watchdog.o
+  CC      util-linux/volume_id/lfs.o
+  AS      libbb/hash_md5_sha_x86-32_shaNI.o
+  CC      util-linux/flock.o
+  AR      procps/lib.a
+  CC      util-linux/volume_id/linux_raid.o
+  AS      libbb/hash_md5_sha_x86-64.o
+  CC      networking/telnetd.o
+  AS      libbb/hash_md5_sha_x86-64_shaNI.o
   CC      networking/tftp.o
+  CC      coreutils/usleep.o
+  CC      util-linux/volume_id/linux_swap.o
+  CC      util-linux/volume_id/luks.o
+  AR      miscutils/lib.a
   CC      networking/tls.o
-  CC      coreutils/uuencode.o
   CC      coreutils/uudecode.o
-  CC      networking/tls_aes.o
-  CC      networking/tls_aesgcm.o
+  CC      libbb/herror_msg.o
+  CC      util-linux/freeramdisk.o
+  CC      coreutils/uuencode.o
+  CC      util-linux/volume_id/minix.o
   CC      coreutils/wc.o
-  CC      libbb/logenv.o
-  CC      util-linux/mkfs_vfat.o
-  CC      networking/tls_fe.o
+  CC      libbb/human_readable.o
   CC      coreutils/who.o
-  CC      util-linux/mkswap.o
-  CC      util-linux/more.o
+  CC      networking/tls_aes.o
+  CC      util-linux/fsck_minix.o
   CC      coreutils/whoami.o
-  CC      networking/tls_pstm.o
+  CC      util-linux/fsfreeze.o
+  CC      util-linux/volume_id/nilfs.o
+  CC      util-linux/fstrim.o
+  CC      util-linux/getopt.o
+  CC      libbb/in_ether.o
+  CC      networking/tls_aesgcm.o
   CC      coreutils/yes.o
-  CC      networking/tls_pstm_montgomery_reduce.o
-  CC      libbb/login.o
-  CC      util-linux/mount.o
-  CC      networking/tls_pstm_mul_comba.o
-  CC      libbb/loop.o
-  CC      libbb/make_directory.o
-  CC      util-linux/mountpoint.o
-  CC      libbb/makedev.o
-  CC      networking/tls_pstm_sqr_comba.o
-  CC      libbb/match_fstype.o
-  CC      networking/tls_rsa.o
-  CC      util-linux/nsenter.o
-  CC      libbb/messages.o
-  CC      networking/tls_sp_c32.o
-  CC      util-linux/pivot_root.o
-  CC      networking/traceroute.o
+  CC      libbb/inet_cksum.o
+  CC      util-linux/volume_id/ntfs.o
+  CC      util-linux/volume_id/ocfs2.o
+  CC      util-linux/hexdump.o
+  CC      util-linux/hexdump_xxd.o
+  CC      util-linux/volume_id/reiserfs.o
+  CC      networking/tls_fe.o
+  CC      libbb/inet_common.o
+  CC      libbb/inode_hash.o
+  CC      networking/tls_pstm.o
+  CC      util-linux/volume_id/romfs.o
   AR      coreutils/lib.a
+  CC      networking/tls_pstm_montgomery_reduce.o
+  CC      libbb/isdirectory.o
+  CC      networking/tls_pstm_mul_comba.o
+  CC      util-linux/volume_id/squashfs.o
+  CC      util-linux/volume_id/sysv.o
+  CC      util-linux/hwclock.o
+  CC      util-linux/ionice.o
+  CC      networking/tls_pstm_sqr_comba.o
+  CC      util-linux/volume_id/ubifs.o
+  CC      util-linux/volume_id/udf.o
+  CC      libbb/isqrt.o
+  CC      util-linux/ipcrm.o
+  CC      networking/tls_rsa.o
+  CC      networking/tls_sp_c32.o
+  CC      libbb/iterate_on_dir.o
+  CC      util-linux/ipcs.o
+  CC      networking/traceroute.o
+  CC      util-linux/volume_id/util.o
+  CC      libbb/kernel_version.o
+  CC      util-linux/last_fancy.o
+  CC      networking/tunctl.o
+  CC      libbb/last_char_is.o
+  CC      util-linux/volume_id/volume_id.o
+  CC      networking/vconfig.o
+  CC      util-linux/losetup.o
+  CC      util-linux/lspci.o
+  CC      util-linux/volume_id/xfs.o
+  CC      util-linux/lsusb.o
+  CC      util-linux/mdev.o
+  CC      networking/wget.o
+  CC      networking/whois.o
+  CC      util-linux/mesg.o
+  CC      util-linux/mkfs_ext2.o
+  CC      libbb/lineedit.o
+  CC      util-linux/mkfs_minix.o
+  CC      util-linux/mkfs_vfat.o
+  CC      libbb/lineedit_ptr_hack.o
+  CC      networking/zcip.o
+  CC      util-linux/mkswap.o
+  AR      util-linux/volume_id/lib.a
+  CC      util-linux/more.o
+  CC      util-linux/mount.o
+  CC      libbb/llist.o
+  CC      util-linux/mountpoint.o
+  CC      libbb/logenv.o
+  CC      util-linux/nsenter.o
+  CC      libbb/login.o
+  CC      util-linux/pivot_root.o
   CC      util-linux/rdate.o
   CC      util-linux/rdev.o
-  CC      libbb/mode_string.o
-  CC      libbb/missing_syscalls.o
-  CC      networking/tunctl.o
-  CC      networking/vconfig.o
-  CC      networking/wget.o
-  CC      libbb/nuke_str.o
   CC      util-linux/readprofile.o
-  CC      libbb/obscure.o
-  CC      networking/whois.o
   CC      util-linux/renice.o
   CC      util-linux/rev.o
-  CC      networking/zcip.o
+  CC      libbb/loop.o
   CC      util-linux/rtcwake.o
-  CC      libbb/parse_config.o
-  CC      libbb/parse_mode.o
-  CC      util-linux/scriptreplay.o
   CC      util-linux/script.o
+  AR      networking/lib.a
+  CC      libbb/make_directory.o
+  CC      util-linux/scriptreplay.o
+  CC      libbb/makedev.o
   CC      util-linux/setarch.o
+  CC      libbb/match_fstype.o
+  CC      libbb/messages.o
+  CC      libbb/missing_syscalls.o
+  CC      libbb/mode_string.o
+  CC      libbb/nuke_str.o
+  CC      util-linux/setpriv.o
+  CC      libbb/parse_config.o
+  CC      util-linux/setsid.o
+  CC      util-linux/swaponoff.o
+  CC      libbb/parse_mode.o
+  CC      libbb/obscure.o
   CC      libbb/percent_decode.o
   CC      libbb/perror_msg.o
-  CC      util-linux/setpriv.o
   CC      libbb/perror_nomsg.o
-  CC      util-linux/setsid.o
+  CC      util-linux/switch_root.o
   CC      libbb/perror_nomsg_and_die.o
   CC      libbb/pidfile.o
   CC      libbb/platform.o
-  CC      util-linux/swaponoff.o
-  CC      util-linux/switch_root.o
   CC      libbb/print_flags.o
   CC      util-linux/taskset.o
-  CC      libbb/print_numbered_lines.o
   CC      util-linux/uevent.o
-  AR      networking/lib.a
+  CC      libbb/print_numbered_lines.o
   CC      util-linux/umount.o
   CC      libbb/printable.o
-  CC      util-linux/unshare.o
   CC      libbb/printable_string.o
-  CC      libbb/process_escape_sequence.o
+  CC      util-linux/unshare.o
   CC      util-linux/wall.o
+  CC      libbb/process_escape_sequence.o
   CC      libbb/procps.o
   CC      libbb/progress.o
   CC      libbb/ptr_to_globals.o
   CC      libbb/pw_encrypt.o
-  CC      libbb/read_key.o
   CC      libbb/read.o
+  CC      libbb/read_key.o
   CC      libbb/read_printf.o
+  AR      util-linux/lib.a
   CC      libbb/recursive_action.o
   CC      libbb/remove_file.o
   CC      libbb/replace.o
@@ -1893,23 +1896,22 @@ procps/powertop.c:181:17: note: 'sprintf' output between 28 and 283 bytes into a
   CC      libbb/safe_poll.o
   CC      libbb/safe_strncpy.o
   CC      libbb/safe_write.o
-  AR      util-linux/lib.a
   CC      libbb/securetty.o
   CC      libbb/setup_environment.o
   CC      libbb/signals.o
   CC      libbb/simplify_path.o
   CC      libbb/single_argv.o
   CC      libbb/skip_whitespace.o
-  CC      libbb/str_tolower.o
   CC      libbb/speed_table.o
+  CC      libbb/str_tolower.o
   CC      libbb/strrstr.o
   CC      libbb/sysconf.o
   CC      libbb/time.o
   CC      libbb/trim.o
   CC      libbb/u_signal_names.o
   CC      libbb/ubi.o
-  CC      libbb/unicode.o
   CC      libbb/udp_io.o
+  CC      libbb/unicode.o
   CC      libbb/update_passwd.o
   CC      libbb/utmp.o
   CC      libbb/uuencode.o
@@ -1927,8 +1929,8 @@ procps/powertop.c:181:17: note: 'sprintf' output between 28 and 283 bytes into a
   CC      libbb/xgetcwd.o
   CC      libbb/xgethostbyname.o
   CC      libbb/xreadlink.o
-  CC      libbb/xrealloc_vector.o
   CC      libbb/xregcomp.o
+  CC      libbb/xrealloc_vector.o
   AR      libbb/lib.a
   LINK    busybox_unstripped
 Trying libraries: crypt m resolv rt
@@ -1939,4 +1941,444 @@ Trying libraries: crypt m resolv rt
  Library m is needed, can't exclude it (yet)
  Library resolv is needed, can't exclude it (yet)
 Final link with: m resolv
-make[1]: Leaving directory '/home/sergio/EmbeddedLinuxDesign/Rootfs/busybox'
+Install Busybox. Install Path is /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/arch -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ash -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/base32 -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/base64 -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/cat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/chattr -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/chgrp -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/chmod -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/chown -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/conspy -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/cp -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/cpio -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/cttyhack -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/date -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/dd -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/df -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/dmesg -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/dnsdomainname -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/dumpkmap -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/echo -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ed -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/egrep -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/false -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/fatattr -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/fdflush -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/fgrep -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/fsync -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/getopt -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/grep -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/gunzip -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/gzip -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/hostname -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/hush -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ionice -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/iostat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ipcalc -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/kbd_mode -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/kill -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/link -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/linux32 -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/linux64 -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ln -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/login -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ls -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/lsattr -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/lzop -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/makemime -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mkdir -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mknod -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mktemp -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/more -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mount -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mountpoint -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mpstat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mt -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/mv -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/netstat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/nice -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/pidof -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ping -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ping6 -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/pipe_progress -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/printenv -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/ps -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/pwd -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/reformime -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/resume -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/rev -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/rm -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/rmdir -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/rpm -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/run-parts -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/scriptreplay -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/sed -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/setarch -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/setpriv -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/setserial -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/sh -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/sleep -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/stat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/stty -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/su -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/sync -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/tar -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/touch -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/true -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/umount -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/uname -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/usleep -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/vi -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/watch -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//bin/zcat -> busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//linuxrc -> bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/acpid -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/adjtimex -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/arp -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/blkid -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/blockdev -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/bootchartd -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/depmod -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/devmem -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/fbsplash -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/fdisk -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/findfs -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/freeramdisk -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/fsck -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/fsck.minix -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/fstrim -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/getty -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/halt -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/hdparm -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/hwclock -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ifconfig -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ifdown -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ifenslave -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ifup -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/init -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/insmod -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ip -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ipaddr -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/iplink -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/ipneigh -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/iproute -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/iprule -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/iptunnel -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/klogd -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/loadkmap -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/logread -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/losetup -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/lsmod -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/makedevs -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mdev -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mkdosfs -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mke2fs -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mkfs.ext2 -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mkfs.minix -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mkfs.vfat -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/mkswap -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/modinfo -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/modprobe -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/nameif -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/pivot_root -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/poweroff -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/raidautorun -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/reboot -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/rmmod -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/route -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/run-init -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/runlevel -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/setconsole -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/slattach -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/start-stop-daemon -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/sulogin -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/swapoff -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/swapon -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/switch_root -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/sysctl -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/syslogd -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/tc -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/tunctl -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/udhcpc -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/uevent -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/vconfig -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/watchdog -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//sbin/zcip -> ../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/[ -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/[[ -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ascii -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/awk -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/basename -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/bc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/beep -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/blkdiscard -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/bunzip2 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/bzcat -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/bzip2 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/cal -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/chpst -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/chrt -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/chvt -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/cksum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/clear -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/cmp -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/comm -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/crc32 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/crontab -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/cryptpw -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/cut -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/deallocvt -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/diff -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dirname -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dos2unix -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dpkg -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dpkg-deb -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/du -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/dumpleases -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/eject -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/env -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/envdir -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/envuidgid -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/expand -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/expr -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/factor -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/fallocate -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/fgconsole -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/find -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/flock -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/fold -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/free -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ftpget -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ftpput -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/fuser -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/groups -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/hd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/head -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/hexdump -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/hexedit -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/hostid -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/id -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/install -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ipcrm -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ipcs -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/killall -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/last -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/less -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/logger -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/logname -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lpq -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lpr -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lsof -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lspci -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lsscsi -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lsusb -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lzcat -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/lzma -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/man -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/md5sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/mesg -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/microcom -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/mkfifo -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/mkpasswd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nl -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nmeter -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nohup -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nproc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nsenter -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/nslookup -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/od -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/openvt -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/passwd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/paste -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/patch -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pgrep -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pkill -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pmap -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/printf -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pscan -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pstree -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/pwdx -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/readlink -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/realpath -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/renice -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/reset -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/resize -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/rpm2cpio -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/runsv -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/runsvdir -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/rx -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/script -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/seq -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/setfattr -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/setkeycodes -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/setsid -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/setuidgid -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sha1sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sha256sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sha3sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sha512sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/showkey -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/shred -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/shuf -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/smemcap -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/softlimit -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sort -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/split -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ssl_client -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/strings -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sum -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/sv -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/svc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/svok -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tac -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tail -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/taskset -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tcpsvd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tee -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/telnet -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/test -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tftp -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/time -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/timeout -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/top -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tr -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/traceroute -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/traceroute6 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tree -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/truncate -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ts -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tsort -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/tty -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/ttysize -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/udhcpc6 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/udpsvd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unexpand -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/uniq -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unix2dos -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unlink -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unlzma -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unshare -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unxz -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/unzip -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/uptime -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/users -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/uudecode -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/uuencode -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/vlock -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/volname -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/w -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/wall -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/wc -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/wget -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/which -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/who -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/whoami -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/whois -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/xargs -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/xxd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/xz -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/xzcat -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/bin/yes -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/add-shell -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/addgroup -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/adduser -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/arping -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/brctl -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/chat -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/chpasswd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/chroot -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/crond -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/delgroup -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/deluser -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/dhcprelay -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/dnsd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ether-wake -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/fakeidentd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/fbset -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/fdformat -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/fsfreeze -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ftpd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/httpd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/i2cdetect -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/i2cdump -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/i2cget -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/i2cset -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/i2ctransfer -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ifplugd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/inetd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/killall5 -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/loadfont -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/lpd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/mim -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/nanddump -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/nandwrite -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/nbd-client -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/nologin -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ntpd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/partprobe -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/popmaildir -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/powertop -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/rdate -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/rdev -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/readahead -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/readprofile -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/remove-shell -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/rtcwake -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/seedrng -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/sendmail -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/setfont -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/setlogcons -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/svlogd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/telnetd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/tftpd -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubiattach -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubidetach -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubimkvol -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubirename -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubirmvol -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubirsvol -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/ubiupdatevol -> ../../bin/busybox
+  /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs//usr/sbin/udhcpd -> ../../bin/busybox
+
+
+--------------------------------------------------
+You will probably need to make your busybox binary
+setuid root to ensure all configured applets will
+work properly.
+--------------------------------------------------
+
+Library dependencies found in busybox bin with words -program interpreter-
+'/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/../aarch64-rpi4-linux-gnu/sysroot/lib/ld-linux-aarch64.so.1' -> '/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/ld-linux-aarch64.so.1'
+Library dependencies found in busybox bin with words -Shared library-
+'/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/../aarch64-rpi4-linux-gnu/sysroot/lib/libm.so.6' -> '/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/libm.so.6'
+'/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/../aarch64-rpi4-linux-gnu/sysroot/lib64/libresolv.so.2' -> '/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/libresolv.so.2'
+'/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/../aarch64-rpi4-linux-gnu/sysroot/lib64/libc.so.6' -> '/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/libc.so.6'
+Create busybox required devices:
+Create null character device, permissions for everyone
+Create console character device, permissions only root
+Mount proc and sysfs in /home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs
+/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/proc already mounted, skip
+/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs/sys already mounted, skip
+Transfer rootfs to the target: Create a standalone initramfs
+Create initramfs.cpio and initramfs image
+Image Name:   InitramfsImage
+Created:      Thu Feb 16 10:24:27 2023
+Image Type:   AArch64 Linux RAMDisk Image (gzip compressed)
+Data Size:    6551209 Bytes = 6397.67 KiB = 6.25 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Copy /home/sergio/EmbeddedLinuxDesign/Rootfs/uRamdisk to SD card
+Image Name:   boot-src-Image
+Created:      Thu Feb 16 10:24:28 2023
+Image Type:   AArch64 Linux Script (uncompressed)
+Data Size:    242 Bytes = 0.24 KiB = 0.00 MiB
+Load Address: 00000000
+Entry Point:  00000000
+Contents:
+   Image 0: 234 Bytes = 0.23 KiB = 0.00 MiB
+End of install_rfs.sh script

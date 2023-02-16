@@ -28,7 +28,7 @@ UBOOT_DIR="u-boot" #git repo installed here
 
 UBOOT_INITRAMFS_CONFIG_FILENAME="boot_cmd.txt" #holds instructors for u-boot on rfs, busybox converts to image
 UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME="boot.scr"
-UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME_IMGNAME="boot-src-Image"
+UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME_IMGNAME="boot-scr-Image"
 
 ROOTFS_ROOT_DIR="rootfs"
 
@@ -160,25 +160,25 @@ if [ $REGENERATE_ALL ==  1 ]; then
 	cd $THIS_SCRIPT_DIR/$BUSYBOX_DIR
 
 	#Configure busybox
-	echo " "; echo "Distclean Busybox"
+	echo " "; echo "Distclean Busybox" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	sudo make -j$MAKE_CORES distclean 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 
-	echo " "; echo "Configure busybox with crosscompile $CROSS_COMPILE"
+	echo " "; echo "Configure busybox with crosscompile $CROSS_COMPILE" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	make -j$MAKE_CORES CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' defconfig 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"'%' .config
 	#sed -i 's%^CONFIG_PREFIX=.*$%CONFIG_PREFIX='"/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs"'%' .config
-	
+	sleep 20
 	#make menuconfig
 
-	echo " "; echo "Cross compile busybox"
+	echo " " 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME";
+	echo " " 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"; echo "Cross compile busybox" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	echo "ARCH is $KERNEL_ARCH and CROSS_COMPILE is $CROSS_COMPILE"
 	#make -j$MAKE_CORES ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE CONFIG_PREFIX=$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-
-	echo " "; echo "Install Busybox. Install Path is $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"
-
+	
+	echo " "; echo "Install Busybox. Install Path is $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	#sudo make -j$MAKE_CORES ARCH="$KERNEL_ARCH" CROSS_COMPILE="$CROSS_COMPILE" CONFIG_PREFIX=$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR install #2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	sudo make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' install #2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	sudo make -j$MAKE_CORES ARCH='arm64' CROSS_COMPILE='/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-' CONFIG_PREFIX='/home/sergio/EmbeddedLinuxDesign/Rootfs/rootfs' install 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	
 fi
 
@@ -193,68 +193,68 @@ echo " "; echo "Find the libraries required by apps in our board, in this case b
 echo " "; echo "Show me the busybox program library dependencies found in busybox binary that I've created in the root filesystem $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox"
 find $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR -name "*so*" -type f -delete
 
-cd $SYSROOT
-echo " "; echo "Library dependencies found in busybox bin with words -program interpreter-"
+cd $SYSROOT 
+echo " "; echo "Library dependencies found in busybox bin with words -program interpreter-" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 lib=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | grep "program interpreter" | rev | cut -d' ' -f1 | tr -d '][' | rev)
 echo "$lib"
 echo " "; echo "Copy these libraries and symbolic links:"
-sudo cp -v -a $SYSROOT$lib $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT$lib $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 echo $?
 
-echo " "; echo "Library dependencies found in busybox bin with words -Shared library-"
+echo " "; echo "Library dependencies found in busybox bin with words -Shared library-" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 libs=$(/usr/local/bin/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu-readelf -a $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/bin/busybox | awk '{print NR, $0}' | grep "Shared library" | rev | cut -d' ' -f1 | tr -d '][' | rev)
 echo "$libs"
 echo " "; echo "Copy these libraries and symbolic links"
 
 #ls -l lib/libm.so.6 | rev | cut -d' ' -f1 | rev
-sudo cp -v -a $SYSROOT/lib/libm.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib/libm.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 echo $?
 
 #ls -l lib64/libresolv.so.2 | rev | cut -d' ' -f1 | rev
-sudo cp -v -a $SYSROOT/lib64/libresolv.so.2 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib64/libresolv.so.2 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 echo $?
 
 #ls -l lib64/libc.so.6 | rev | cut -d' ' -f1 | rev
-sudo cp -v -a $SYSROOT/lib64/libc.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
+sudo cp -v -a $SYSROOT/lib64/libc.so.6 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 echo $?
 
 #Create busybox required devices
-echo " "; echo "Create busybox required devices:"
+echo " "; echo "Create busybox required devices:" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 cd $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 if [ ! -e dev/null ]; then
-	echo "Create null character device, permissions for everyone"
+	echo "Create null character device, permissions for everyone" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	sudo mknod -m 666 dev/null c 1 3
 else
-	echo "dev/null busybox device not created because it already exists."
+	echo "dev/null busybox device not created because it already exists." 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 fi
 
 if [ ! -e dev/console ]; then
-	echo "Create console character device, permissions only root"
+	echo "Create console character device, permissions only root" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 	sudo mknod -m 600 dev/console c 5 1
 else
-	echo "dev/console busybox device not created because it already exists."
+	echo "dev/console busybox device not created because it already exists." 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 fi
 
-echo "Mount proc and sysfs in $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR"
+echo "Mount proc and sysfs in $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" ]; then
         sudo mount -t proc proc /proc
-        echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc"
+        echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 else 
-        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc already mounted, skip"
+        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 fi
 
 if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" ]; then
         sudo mount -t sysfs sysfs /sys
-				echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys"
+				echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 else 
-        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys already mounted, skip"
+        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 fi
 
 #Transferring rootfs to the target
 #Create a standalone initramfs
 cd $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
-echo " "; echo "Transfer rootfs to the target: Create a standalone initramfs"
+echo " "; echo "Transfer rootfs to the target: Create a standalone initramfs" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 echo "Clean files."
 if [ -f $THIS_SCRIPT_DIR/initramfs.cpio ]; then
 	rm -v $THIS_SCRIPT_DIR/initramfs.cpio
@@ -280,24 +280,21 @@ else
 	echo "$MOUNT_BOOT_DIRECTORY doesn't exist to delete it."
 fi
 
-#Create init program
-
-
-echo " "; echo "Create initramfs.cpio and initramfs image"
+echo " "; echo "Create initramfs.cpio and initramfs image" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 find . | cpio -H newc -ov --owner root:root > ../initramfs.cpio
 
 cd ..
 gzip initramfs.cpio
 
-mkimage -A $ARCH -O linux -T ramdisk -d initramfs.cpio.gz -n $STANDALONE_INITRAMFS_IMAGE_NAME $STANDALONE_INITRAMFS_IMAGE
+mkimage -A $ARCH -O linux -T ramdisk -d initramfs.cpio.gz -n $STANDALONE_INITRAMFS_IMAGE_NAME $STANDALONE_INITRAMFS_IMAGE 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 
 #copy rootfs to SD card boot
-echo " "; echo "Copy $THIS_SCRIPT_DIR/$STANDALONE_INITRAMFS_IMAGE to SD card"
+echo " "; echo "Copy $THIS_SCRIPT_DIR/$STANDALONE_INITRAMFS_IMAGE to SD card" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 sudo cp -v $THIS_SCRIPT_DIR/$STANDALONE_INITRAMFS_IMAGE $MOUNT_BOOT_DIRECTORY
 echo $?
 
 #Create u-boot config script image
-echo " "; echo "Make u-boot config script image"
+echo " "; echo "Make u-boot config script image" 
 echo "Clean existing files"
 if [ -f $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME ]; then
 	rm -v $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME
@@ -331,7 +328,7 @@ booti ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr}' >> $THIS_SCRIPT_DIR/$UBOOT
 #setenv bootargs console=serial0,115200 console=ttyAMA0 console=ttyS0 console=tty1 console=ttyO0 rdinit=/bin/sh
 
 echo " "; echo "Make $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME image"
-$ROOT_UBOOT_DIR/$UBOOT_DIR/tools/mkimage -A $ARCH -O linux -T script -C none -n $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME_IMGNAME -d $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_FILENAME $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME
+$ROOT_UBOOT_DIR/$UBOOT_DIR/tools/mkimage -A $ARCH -O linux -T script -C none -n $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME_IMGNAME -d $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_FILENAME $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 
 #echo "Copy $UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME to SD card" 
 #sudo cp -v $THIS_SCRIPT_DIR/$UBOOT_INITRAMFS_CONFIG_IMAGE_FILENAME $MOUNT_BOOT_DIRECTORY
@@ -340,4 +337,4 @@ $ROOT_UBOOT_DIR/$UBOOT_DIR/tools/mkimage -A $ARCH -O linux -T script -C none -n 
 echo " "; echo "Update db with new file names to use by locate"
 sudo updatedb
 
-echo "End of $THIS_SCRIPT_NAME script"
+echo "End of $THIS_SCRIPT_NAME script" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
