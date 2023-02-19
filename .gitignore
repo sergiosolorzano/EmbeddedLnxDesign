@@ -9,3 +9,4 @@
 /initramfs.cpio
 /Rootfs/initramfs.cpio.gz
 *.log
+/B-root/Images
