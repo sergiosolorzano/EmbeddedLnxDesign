@@ -67,12 +67,15 @@ if [ $CUSTOM_KERNEL==1 ]; then
 	if [ ! -f "board/mypi64/bcm2711_defconfig" ]; then 
 		cp -v /home/sergio/EmbeddedLinuxDesign/Kernel/raspberrypi_linuxos/arch/arm64/configs/bcm2711_defconfig board/mypi64/bcm2711_defconfig
 	fi
+
+	echo "Use /home/sergio/EmbeddedLinuxDesign/B-root/latest-config_defconfig to .config"
+	make defconfig BR2_DEFCONFIG="/home/sergio/EmbeddedLinuxDesign/B-root/latest-config_defconfig"
+else
+	echo "Write "$TARGET_DEVICE"_64_defconfig to .config"
+	make "$TARGET_DEVICE"_64_defconfig	
 fi
 
-echo "Write "$TARGET_DEVICE"_64_defconfig to .config"
-make "$TARGET_DEVICE"_64_defconfig
-
-#Add other features
+#Add other settings
 echo " "; echo "Add other features in menuconfig"
 echo " "; read -p "Press enter to launch menuconfig:" go
 make menuconfig
