@@ -10,3 +10,4 @@
 /Rootfs/initramfs.cpio.gz
 *.log
 /B-root/Images
+balenaEtcher*
