@@ -1,5 +1,0 @@
-console=serial0,115200 console=tty1 root=/dev/ rootwait
-console=serial0,115200 console=tty1 root=/dev/ rootwait
-console=serial0,115200 console=tty1 root=/dev/sdb1 rootwait
-console=serial0,115200 console=tty1 root=/dev/sdb1 rootwait
-console=serial0,115200 console=tty1 root=/dev/sdb1 rootwait
