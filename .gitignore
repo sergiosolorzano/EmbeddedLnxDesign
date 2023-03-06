@@ -11,3 +11,5 @@
 *.log
 /B-root/Images
 balenaEtcher*
+/Kernel/linux-stable
+
