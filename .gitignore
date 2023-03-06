@@ -1,7 +1,9 @@
 #ignore source linux kernel
 /Kernel/linux-ltr
+/Kernel/linux-ltr2
 /U-Boot/u-boot
 /firmware
+/firmware_boot
 /Kernel/raspberrypi_linuxos
 /Kernel/result_files/L_uImage.bin
 /Rootfs/busybox
@@ -11,5 +13,9 @@
 /Kernel/usb_r_os_files/
 /B-root/Images/
 /Rootfs/boot.scr
-Rootfs/uRamdisk
-
+/Rootfs/uRamdisk
+/Kernel/linux-stable
+/Failures
+**/boot/
+**/rootfs/
+/usb_rootfs_works
