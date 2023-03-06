@@ -19,6 +19,9 @@ RLNX_KERNEL_INSTALL_SCRIPT="install-rlnx-kernel-sh"
 RFS_ROOT_DIR="$(THIS_SCRIPT_DIR)/Rootfs"
 RFS_INSTALL_SCRIPT="install_rfs.sh"
 
+C_TEST_SCRIPT="hello.c"
+CPP_TEST_SCRIPT="hello.cpp"
+
 all_rlnx_kernel: ##Command and optional args: C_TEST_SCRIPT e.g. hello.c and CPP_TEST_SCRIPT e.g hello.cpp UBOOT_GIT_VERSION e.g. v2023.01 and CONFIG_FILENAME e.g bootloader_config_source_file.txt followed by make all
 	cd $(X_TOOLS_ROOT_DIR);	./$(X_TOOLS_INSTALL_SCRIPT) -c $(C_TEST_SCRIPT) -p $(CPP_TEST_SCRIPT); cd $(UBOOT_ROOT_DIR); ./$(UBOOT_INSTALL_SCRIPT) -v $(UBOOT_GIT_VERSION) -f $(CONFIG_FILENAME); cd $(RLNX_KERNEL_ROOT_DIR); ./$(RLNX_KERNEL_INSTALL_SCRIPT); cd $(RFS_ROOT_DIR); ./$(RFS_INSTALL_SCRIPT)
 

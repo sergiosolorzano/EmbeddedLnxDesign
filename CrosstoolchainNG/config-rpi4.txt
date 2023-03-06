@@ -19,6 +19,7 @@ CT_CONFIGURE_has_python_3_4_or_newer=y
 CT_CONFIGURE_has_bison_2_7_or_newer=y
 CT_CONFIGURE_has_python=y
 CT_CONFIGURE_has_dtc=y
+CT_CONFIGURE_has_svn=y
 CT_CONFIGURE_has_git=y
 CT_CONFIGURE_has_md5sum=y
 CT_CONFIGURE_has_sha1sum=y
