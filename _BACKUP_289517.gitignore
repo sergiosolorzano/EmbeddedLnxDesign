@@ -1,15 +1,25 @@
 #ignore source linux kernel
 /Kernel/linux-ltr
+/Kernel/linux-ltr2
 /U-Boot/u-boot
 /firmware
+/firmware_boot
 /Kernel/raspberrypi_linuxos
 /Kernel/result_files/L_uImage.bin
 /Rootfs/busybox
 /Rootfs/rootfs
 /initramfs.cpio
 /Rootfs/initramfs.cpio.gz
+<<<<<<< HEAD
 /Kernel/usb_r_os_files/
 /B-root/Images/
-/Rootfs/boot.scr
+=======
+*.log
+/B-root/Images
+/Failures
+**/boot/
+**/rootfs/
+/usb_r_os_files
+/usb_rootfs_works
 Rootfs/uRamdisk
-
+>>>>>>> rtfs_kernel_panic

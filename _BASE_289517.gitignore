@@ -8,8 +8,3 @@
 /Rootfs/rootfs
 /initramfs.cpio
 /Rootfs/initramfs.cpio.gz
-/Kernel/usb_r_os_files/
-/B-root/Images/
-/Rootfs/boot.scr
-Rootfs/uRamdisk
-
