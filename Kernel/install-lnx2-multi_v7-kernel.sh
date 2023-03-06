@@ -6,7 +6,7 @@ set -e
 X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED="aarch64-rpi4-linux-gnu"
 X_TOOLCHAIN_DIRECTORY="$HOME/x-tools"
 
-KERNEL_ARCH="arm"
+KERNEL_ARCH="arm64"
 KERNEL_SOURCE_DIRECTORY="linux-ltr2"
 KERNEL_DEFAULT_CONFIG_FILE="multi_v7_defconfig" #linux config to make
 RPI4_DTB="bcm2711-rpi-4-b.dtb"
@@ -29,7 +29,7 @@ UBOOT_DIR="u-boot" #install git repo here
 THIS_SCRIPT_DIR="`pwd`"
 THIS_SCRIPT_NAME=`basename "$0"`
 
-DEFAULT_LINUX_KERNEL_VERSION="5.16" #5.16 #6.2.2
+DEFAULT_LINUX_KERNEL_VERSION="5.15" #5.16 #6.2.2
 DEFAULT_LINUX_KERNEL_MAJOR_VERSION="5" #5 #6
 USER_SELECTED_LINUX_KERNEL_VERSION=""
 #LINUX_KERNEL_GIT_REPO="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-"
@@ -175,7 +175,7 @@ if [ ! -f $COMPRESSED_KERNEL_IMAGE ]; then
 
   echo " "; echo "Configure Kernel config file $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE"
   #make -j8 ARCH=arm CROSS_COMPILE=/home/sergio/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu- multi_v7_defconfig
-  make ARCH=$KERNEL_ARCH $KERNEL_DEFAULT_CONFIG_FILE
+  make ARCH=$KERNEL_ARCH CROSS_COMPILE==$CROSS_COMPILE $KERNEL_DEFAULT_CONFIG_FILE
 
   echo " "; echo "Set specific debug variables in .config file"
   #set_kernel_config_variables CONFIG_DEBUG_INFO y
@@ -195,13 +195,13 @@ if [ ! -f $COMPRESSED_KERNEL_IMAGE ]; then
   #cat .config | grep CONFIG_DEBUG_CONFIG
 
   #not using menuconfig
-  #make menuconfig
+  #make menuconfig ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE nconfig
 
   #Build linux kernel
   echo " "; echo "Build compressed kernel Image: zImage"
   #make -j8 ARCH=arm CROSS_COMPILE=/home/sergio/x-tools/aarch64-rpi4-linux-gnu/bin/aarch64-rpi4-linux-gnu- zImage
-  make -j8 ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE $COMPRESSED_KERNEL_IMAGE
-  sudo mv $COMPRESSED_KERNEL_IMAGE $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY
+  make -j8 ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE CXXFLAGS="-march=armv8-a+crc -mtune=cortex-a72" CFLAGS="-march=armv8-a+crc -mtune=cortex-a72" $COMPRESSED_KERNEL_IMAGE
+  sudo cp $COMPRESSED_KERNEL_IMAGE $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY
 
   #Move System.map to Results folder
   #echo " "; echo "Move System.map to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY"

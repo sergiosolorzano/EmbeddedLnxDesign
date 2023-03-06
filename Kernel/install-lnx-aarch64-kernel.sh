@@ -5,12 +5,16 @@ set -e
 
 X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED="aarch64-rpi4-linux-gnu"
 X_TOOLCHAIN_DIRECTORY="$HOME/x-tools"
-X_TOOLCHAIN_ARCH="arm"
+X_TOOLCHAIN_ARCH="arm64"
 
-KERNEL_ARCH="arm"
+KERNEL_ARCH="arm64"
 KERNEL_SOURCE_DIRECTORY="linux-ltr"
 #KERNEL_DEFAULT_CONFIG_FILE="defconfig" #this is linux kernel config file not used here
+
 KERNEL_DEFAULT_CONFIG_FILE="bcm2711_defconfig" #this is raspberry pi config file used
+KERNEL_DTB_FILE="bcm2711-rpi-4-b.dtb" #this is raspberry pi config file used
+
+KERNEL_MAKE_REQUEST_IMAGE="Image.gz"
 KERNEL_GENERATED_ELF_FILE="vmlinux"
 UIMAGE_FILENAME="L_uImage.bin"
 UIMAGE_NAME="Linux_uImage"
@@ -28,9 +32,11 @@ UBOOT_DIR="u-boot" #install git repo here
 THIS_SCRIPT_DIR="`pwd`"
 THIS_SCRIPT_NAME=`basename "$0"`
 
-DEFAULT_LINUX_KERNEL_VERSION="6.2.2" #5.15.93
+DEFAULT_LINUX_KERNEL_VERSION="5.14.9" #5.16 #6.2.2
+DEFAULT_LINUX_KERNEL_MAJOR_VERSION="5" #5 #6
 USER_SELECTED_LINUX_KERNEL_VERSION=""
-LINUX_KERNEL_GIT_REPO="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-"
+
+LINUX_KERNEL_GIT_REPO="https://cdn.kernel.org/pub/linux/kernel/v$DEFAULT_LINUX_KERNEL_MAJOR_VERSION.x/linux-"
 
 RASPBERRYPI_LINUXOS_GIT_REPO="https://github.com/raspberrypi/linux.git"
 RASPBERRYPI_LINUXOS_DIRECTORY_NAME="raspberrypi_linuxos"
@@ -38,9 +44,10 @@ RASPBERRYPI_FIRMWARE_ROOT_DIRECTORY="firmware"
 RASPBERRYPI_PROCESSOR="BCM2711"
 PROCESSOR_SOC="broadcom"
 
-TARGET_DEVICE="" #USB device with SD card
-MOUNT_BOOT_DIRECTORY="mnt/boot"
+MOUNT_BOOT_DIRECTORY="/media/sergio/boot"
+
 UTILITIES_DIRECTORY="../Utilities"
+KERNEL_LOG_FILENAME="log_kernel.txt"
 
 ENABLE_CONFIG_DEBUG_INFO=0 #1=Enables Debug in .config file, can be used with debugger such as kgdb
 ENABLE_CONFIG_DEBUG_CONFIG=0 #1=Enables Config debug support
@@ -80,7 +87,7 @@ do
 done
 
 if [[ -z "$USER_SELECTED_LINUX_KERNEL_VERSION" ]] ; then 
-  echo "Execute this shell script by optionally providing linux kernel v5.x long term release version, default is $DEFAULT_LINUX_KERNEL_VERSION.";
+  echo "Execute this shell script by optionally providing linux kernel v6.x long term release version, default is $DEFAULT_LINUX_KERNEL_VERSION.";
   echo " "; echo  "Example: Use ./$THIS_SCRIPT_NAME -v $DEFAULT_LINUX_KERNEL_VERSION"
   echo " "; read -p "Exit script and re-execute with your preferred version? (y/n)?" choice
   case "$choice" in 
@@ -130,6 +137,11 @@ else
   echo "Skip download Linux kernel, already present."
 fi
 
+##get stable
+#echo "Now get stable"
+#git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git --depth=1
+#  git branch
+
 echo " "
 #Clone RaspberryPi linux OS
 if [ ! -d "$THIS_SCRIPT_DIR"/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME ]; then
@@ -155,7 +167,7 @@ PATH=$X_TOOLCHAIN_DIRECTORY/$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED/bin/:$PATH
 echo " "; echo "Added $PATH/bin/ to PATH env var"
 export ARCH=$KERNEL_ARCH
 echo " "; echo "Added $ARCH to ARCH env var"
-export CROSS_COMPILE="$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED"-
+export CROSS_COMPILE=$X_TOOLCHAIN_DIRECTORY/$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED/bin/"$X_TOOLCHAIN_ARCH_TRIPLET_INSTALLED"-
 echo " "; echo "Added $CROSS_COMPILE to CROSS_COMPILE env var"
 
 cd $KERNEL_SOURCE_DIRECTORY
@@ -164,20 +176,20 @@ if [ ! -f $KERNEL_GENERATED_ELF_FILE ]; then
   echo "vmlinux not present. Build kernel."
   #clean files
   echo " "; echo "Clean files with make mrproper"
-  make mrproper
+  make mrproper 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 
   #Show default config file to use to build Kernel
   echo " "; echo "We use raspberry pi default config file." 
   echo "Kernel build config file used for $KERNEL_ARCH located at $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE"
   if [ ! -f $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE ]; then
-    echo "Copy $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE to $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/"
-    sudo cp $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/
+    echo "Copy $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE to $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+    sudo cp -v $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/ 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
   else
-    echo "A copy of the kernel config file $KERNEL_DEFAULT_CONFIG_FILE already exists at $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/"
+    echo "A copy of the kernel config file $KERNEL_DEFAULT_CONFIG_FILE already exists at $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/configs/" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
   fi
 
   echo " "; echo "Configure Linux with config file $THIS_SCRIPT_DIR/$RASPBERRYPI_LINUXOS_DIRECTORY_NAME/arch/$KERNEL_ARCH/configs/$KERNEL_DEFAULT_CONFIG_FILE"
-  make $KERNEL_DEFAULT_CONFIG_FILE
+  make $KERNEL_DEFAULT_CONFIG_FILE 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 
   echo " "; echo "Set specific debug variables in .config file"
   set_kernel_config_variables CONFIG_DEBUG_INFO y
@@ -200,41 +212,44 @@ if [ ! -f $KERNEL_GENERATED_ELF_FILE ]; then
   #make menuconfig
 
   #Build linux kernel
-  echo " "; echo "Build compressed kernel Image: Image.gz"
-  make -j8 Image.gz
+  echo " "; echo "Build compressed kernel Image: $KERNEL_MAKE_REQUEST_IMAGE" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+  make -j8 $KERNEL_MAKE_REQUEST_IMAGE 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 
   #Move System.map to Results folder
-  echo " "; echo "Move System.map to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY"
-  sudo mv "System.map" $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY  
+  echo " "; echo "Move System.map to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+  sudo mv -v "System.map" $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 fi
 
 #if [ 0 == 1 ]; then
 #convert vmlinux to uImage for u-boot
 cd $ROOT_UBOOT_DIR/$UBOOT_DIR
-echo " ";echo "Convert $KERNEL_GENERATED_ELF_FILE to uImage for u-boot using u-boot's mkimage:"
+echo " ";echo "Convert $KERNEL_GENERATED_ELF_FILE to uImage for u-boot using u-boot's mkimage:" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 #echo "Kernel generated ELF file: $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/$KERNEL_GENERATED_ELF_FILE - Image Name: $UIMAGE_NAME - Image filename $UIMAGE_FILENAME - Image Stored Address:$UIMAGE_LOAD_ADDRESS - located at $PWD"
 #mkimage -A arm -O linux -T kernel -C none -a $UIMAGE_LOAD_ADDRESS -e $UIMAGE_LOAD_ADDRESS -n $UIMAGE_NAME -d "$THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/$KERNEL_GENERATED_ELF_FILE" $UIMAGE_FILENAME
-mkimage -A arm -O linux -T kernel -C none -n $UIMAGE_NAME -d "$THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/$KERNEL_GENERATED_ELF_FILE" $UIMAGE_FILENAME
-echo "Move $UIMAGE_FILENAME to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY"
-sudo mv $UIMAGE_FILENAME $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY
+mkimage -A arm -O linux -T kernel -C none -n $UIMAGE_NAME -d "$THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/$KERNEL_GENERATED_ELF_FILE" $UIMAGE_FILENAME 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+echo "Move $UIMAGE_FILENAME to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+sudo mv -v $UIMAGE_FILENAME $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 #fi
 
-echo " "; echo "Compile device trees"
+echo " "; echo "Compile device trees" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 cd $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY
-make dtbs
-echo "Copy compiled dtb files from $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/$PROCESSOR_SOC/*.dtb to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY"
-sudo cp $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/$PROCESSOR_SOC/*.dtb $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY
+#Build dtbs
+sudo make -j$MAKE_CORES ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE dtbs 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+echo "Copy compiled dtb files from $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/$PROCESSOR_SOC/*.dtb to $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+sudo cp -v $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/$PROCESSOR_SOC/$KERNEL_DTB_FILE $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
 
-#Compile modules
-echo " "; echo "No modules to compile, skip"
+echo " "; echo "Copy dtbo Files to SD card" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+echo "Copy overlays dtbo from $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/overlays/*.dtbo to $MOUNT_BOOT_DIRECTORY/overlays" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+if [ ! -d $MOUNT_BOOT_DIRECTORY/overlays ]; then
+  sudo mkdir -v $MOUNT_BOOT_DIRECTORY/overlays 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+fi
+  sudo cp -v $THIS_SCRIPT_DIR/$KERNEL_SOURCE_DIRECTORY/arch/$KERNEL_ARCH/boot/dts/overlays/*.dtbo $MOUNT_BOOT_DIRECTORY/overlays 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+
+#Build modules
+  echo " "; echo "Build modules" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+  sudo make -j$MAKE_CORES ARCH=$KERNEL_ARCH CROSS_COMPILE=$CROSS_COMPILE modules 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+
 
 #mount usb device
-echo " "; echo "Let's load files to SD card"
-read -p "Enter device name (e.g. sdb) of the SD card with boot and rootfs partitions:" TARGET_DEVICE
-sleep 5
-sudo mount /dev/"$TARGET_DEVICE"1 $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY
-echo " "; echo "Copy all resulting files to SD Card"
-sudo cp -v $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY/* $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY
-echo " "; echo $(ls $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY -la)
-echo "Unmount SD card"
-sudo umount $THIS_SCRIPT_DIR/../$MOUNT_BOOT_DIRECTORY
+echo " "; echo "Let's load files to SD card" 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"
+sudo cp -v $THIS_SCRIPT_DIR/$RESULT_FILES_DIRECTORY/* $MOUNT_BOOT_DIRECTORY 2>&1 | tee -a "$THIS_SCRIPT_DIR/$KERNEL_LOG_FILENAME"

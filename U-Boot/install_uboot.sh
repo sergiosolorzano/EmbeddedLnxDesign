@@ -20,6 +20,7 @@ ROOT_UBOOT_DIR="`pwd`"
 UBOOT_DIR="u-boot" #install git repo here
 ROOT_UBOOT_TOOL_LIBS_DIR="src"
 
+RPI_BOOTLOADER="bootcode.bin"
 
 THIS_SCRIPT_DIR="`pwd`"
 THIS_SCRIPT_NAME=`basename "$0"`
@@ -84,18 +85,6 @@ if [ $REGENERATE_ALL ==  1 ]; then
     * ) echo "invalid choice, exiting."; exit 1;;
   esac
 
-  #Create mnt/boot and mnt/rootfs directories
-  #if [ ! -d "$MOUNT_BOOT_DIRECTORY" ]; then
-   # sudo mkdir -p $MOUNT_BOOT_DIRECTORY
-    #sudo chmod a+rwx $MOUNT_BOOT_DIRECTORY
-    #echo "Created mount Directory $MOUNT_BOOT_DIRECTORY"
-  #fi
-  #if [ ! -d "$MOUNT_ROOTFS_DIRECTORY" ]; then
-   # sudo mkdir -p $MOUNT_ROOTFS_DIRECTORY
-    #sudo chmod a+rwx $MOUNT_ROOTFS_DIRECTORY/..
-    #echo "Created mount Directory $MOUNT_ROOTFS_DIRECTORY"
-  #fi
-
   #Format SD card
   if [[ "$format" =~ ^(y|Y|Yes|yes|YES)$ ]]; then 
     echo "Stand by, detecting SD card."
@@ -112,6 +101,7 @@ if [ $REGENERATE_ALL ==  1 ]; then
       * ) echo "invalid choice, exiting."; exit 1;;
     esac
    
+   #execute format script
     $UTILITIES_DIRECTORY/$FORMAT_DEVICE_SCRIPT $TARGET_DEVICE
 
     echo " "; echo "Formatting $TARGET_DEVICE done."
@@ -122,7 +112,7 @@ if [ $REGENERATE_ALL ==  1 ]; then
     echo "Device $TARGET_DEVICE should show FAT32 boot and ext4 rootfs partitions:"
     lsblk
   else
-    echo " "; read -p "Enter device name (e.g. sdb) to upload u-boot files:" TARGET_DEVICE
+    read -p "Enter device name (e.g. sdb) to upload u-boot files:" TARGET_DEVICE
   fi
 
   #Create log directory
@@ -150,7 +140,7 @@ if [ $REGENERATE_ALL ==  1 ]; then
 
   #permissions required in u-boot dir
   echo "Change $ROOT_UBOOT_DIR/$UBOOT_DIR directory rights recursively"
-  #sudo chmod -R 777 $ROOT_UBOOT_DIR/$UBOOT_DIR
+  sudo chmod -R 777 $ROOT_UBOOT_DIR/$UBOOT_DIR
 
   if [ "$UBOOT_USER_VERSION" != "master" ] ; then 
     echo "Switching to branch $UBOOT_USER_VERSION"
@@ -202,10 +192,32 @@ if [ $REGENERATE_ALL ==  1 ]; then
   make -j$MAKE_CORES
 
   echo " "; echo "Copy $THIS_SCRIPT_DIR/u-boot/u-boot.bin into SD card mount"
-  sudo cp  $THIS_SCRIPT_DIR/u-boot/u-boot.bin $MOUNT_BOOT_DIRECTORY
+  if [ -f $MOUNT_BOOT_DIRECTORY/u-boot.bin ]; then
+    echo " ";echo "Delete u-boot.bin from SD card"
+    sudo rm $MOUNT_BOOT_DIRECTORY/u-boot.bin
+  fi
+
+  if [ ! -f $MOUNT_BOOT_DIRECTORY/u-boot.bin ]; then
+    sudo cp  $THIS_SCRIPT_DIR/u-boot/u-boot.bin $MOUNT_BOOT_DIRECTORY
+  fi
+
+  if [ -f $MOUNT_BOOT_DIRECTORY/$RPI_BOOTLOADER ]; then
+    echo " ";echo "Delete $MOUNT_BOOT_DIRECTORY/$RPI_BOOTLOADER from SD card"
+    sudo rm $MOUNT_BOOT_DIRECTORY/$RPI_BOOTLOADER
+  fi
+
+  echo " "; echo "Copy $THIS_SCRIPT_DIR/../firmware_boot/$RPI_BOOTLOADER into SD card mount"
+  if [ ! -f $MOUNT_BOOT_DIRECTORY/$RPI_BOOTLOADER ]; then
+    sudo cp  $THIS_SCRIPT_DIR/../firmware_boot/$RPI_BOOTLOADER $MOUNT_BOOT_DIRECTORY
+  fi
+
+  if [ -f "$THIS_SCRIPT_DIR"/config.txt ]; then
+    echo " ";echo "Delete "$THIS_SCRIPT_DIR"/config.txt from SD card"
+    sudo rm "$THIS_SCRIPT_DIR"/config.txt
+  fi
 
   echo " "; echo "Delete config.txt if it exists and create u-boot config file and add u-boot arguments to it."
-  if [[ -z "$THIS_SCRIPT_DIR"/config.txt ]] ; then 
+  if [[ ! -z "$THIS_SCRIPT_DIR"/config.txt ]] ; then 
   sudo rm $THIS_SCRIPT_DIR/config.txt
   fi
 
@@ -230,3 +242,28 @@ lsblk -f
 ls $MOUNT_BOOT_DIRECTORY -l
 
 echo " "; echo "End of $THIS_SCRIPT_NAME Script"
+
+
+
+
+
+
+
+
+
+
+# notes
+
+
+
+  #Create mnt/boot and mnt/rootfs directories
+  #if [ ! -d "$MOUNT_BOOT_DIRECTORY" ]; then
+   # sudo mkdir -p $MOUNT_BOOT_DIRECTORY
+    #sudo chmod a+rwx $MOUNT_BOOT_DIRECTORY
+    #echo "Created mount Directory $MOUNT_BOOT_DIRECTORY"
+  #fi
+  #if [ ! -d "$MOUNT_ROOTFS_DIRECTORY" ]; then
+   # sudo mkdir -p $MOUNT_ROOTFS_DIRECTORY
+    #sudo chmod a+rwx $MOUNT_ROOTFS_DIRECTORY/..
+    #echo "Created mount Directory $MOUNT_ROOTFS_DIRECTORY"
+  #fi

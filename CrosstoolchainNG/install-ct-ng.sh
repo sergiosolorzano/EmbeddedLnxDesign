@@ -21,6 +21,7 @@ X_TOOL_NG_GIT_REPO_QUERY="https://crosstool-ng.github.io/"
 X_TOOL_GENERAL_TARGET_ARCHICTURE="rpi"
 X_TOOL_MODEL_TARGET_ARCHICTURE="rpi4"
 X_TOOL_TARGET_ARCHITECTURE="aarch64-rpi4-linux-gnu" #CPU-Vendor-Kernel-OS
+#X_TOOL_TARGET_ARCHITECTURE="aarch64-rpi4-linux-gnu" #CPU-Vendor-Kernel-OS
 #X_TOOL_TARGET_ARCHITECTURE="armv8-rpi4-linux-gnueabihf"
 X_TOOL_TARGET_CONFIG_FILENAME=""
 X_TOOL_TARGET_CONFIG_FILENAME_PATH=""
@@ -178,20 +179,25 @@ fi
 cd ~/$ROOT_X_TOOL_DIR
 echo "git clone $X_TOOL_NG_GIT_REPO into directory $ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR"
 git clone $X_TOOL_NG_GIT_REPO 2>&1 | tee log/git_clone.log >/dev/null
-cd $X_TOOL_NG_DIR
-echo "I've git checked out Toolchain branch crosstool-ng-${LatestRelease}"
-git checkout crosstool-ng-${LatestRelease} 2>&1 | tee  ../log/git_checkout_crosstool-ng-${LatestRelease}.log >/dev/null
+#cd $ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR
+echo "Git check out Toolchain branch crosstool-ng-${LatestRelease}"
+cd ~/$ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR
+git checkout crosstool-ng-${LatestRelease} -b ${LatestRelease} 2>&1 | tee  ../log/git_checkout_crosstool-ng-${LatestRelease}.log >/dev/null
+#git checkout crosstool-ng-1.24.0 -b 1.24.0 #2>&1 | tee  ../log/git_checkout_crosstool-ng-crosstool-ng-1-24-0.log >/dev/null
+git branch
+#cd ~/$ROOT_X_TOOL_DIR
 
 #  Configure Toolchain & install
 echo " "
 echo "Configure Toolchain and install to build cross toolchains."
-echo "Execute ./bootstrap in toolchain $ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR. Adding output to ~/$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/bootstrap.log file."
+echo "Execute ./bootstrap in toolchain $ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR for xtool to setup env variables and download necessary build tools. Adding output to ~/$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/bootstrap.log file."
 ./bootstrap 2>&1 | tee ~/"$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/bootstrap.log" >/dev/null
 echo "Execute ./configure --prefix=${PWD}. Prefix to install the toolchain for independent architecture in $PWD to avoid root permissions which otherwise would be needed if installed in default location /usr/local/share.."
+echo "./configure also to configure source code for installation in this path, e.g. checking dependencies."
 echo "Adding .configure output to ~/$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/configure--prefix.log"
 ./configure --prefix=${PWD} | tee ~/"$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/configure--prefix.log" >/dev/null
 
-echo "Execute Makefile -- make -- in ~/$ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR. to ??TBC-configure the crosstool installation configuration file-TBC??"
+echo "Execute Makefile -- make -- in ~/$ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR. to compile source code into the ct-ng exe program required to run x-compilation toolchain"
 echo "Adding Makefile log output to ~/$ROOT_X_TOOL_DIR/$INSTALL_CT_LOG_DIR/make.log"
 make 2>&1 | tee ../log/make.log >/dev/null
 echo "Execute Makefile -- make install Makefile target-- in ~/$ROOT_X_TOOL_DIR/$X_TOOL_NG_DIR."
