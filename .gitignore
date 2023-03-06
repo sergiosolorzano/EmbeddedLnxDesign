@@ -8,3 +8,4 @@
 /Rootfs/rootfs
 /initramfs.cpio
 /Rootfs/initramfs.cpio.gz
+/Kernel/usb_r_os_files/
