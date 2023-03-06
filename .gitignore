@@ -1,7 +1,10 @@
 #ignore source linux kernel
+#ignore source linux kernel
 /Kernel/linux-ltr
+/Kernel/linux-ltr2
 /U-Boot/u-boot
 /firmware
+/firmware_boot
 /Kernel/raspberrypi_linuxos
 /Kernel/result_files/L_uImage.bin
 /Rootfs/busybox
@@ -10,6 +13,10 @@
 /Rootfs/initramfs.cpio.gz
 *.log
 /B-root/Images
-balenaEtcher*
-/Kernel/linux-stable
-
+/Failures
+**/boot/
+**/rootfs/
+/usb_r_os_files
+/usb_rootfs_works
+Rootfs/uRamdisk
+/Kernel/linux_stable
