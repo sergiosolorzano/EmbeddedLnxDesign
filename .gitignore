@@ -32,4 +32,7 @@
 /usb_rootfs_works
 Rootfs/uRamdisk
 /Kernel/linux_stable
+<<<<<<< HEAD
+>>>>>>> buildroot
+=======
 >>>>>>> buildroot
