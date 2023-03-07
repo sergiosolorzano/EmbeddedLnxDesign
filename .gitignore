@@ -1,5 +1,4 @@
 #ignore source linux kernel
-#ignore source linux kernel
 /Kernel/linux-ltr
 /Kernel/linux-ltr2
 /U-Boot/u-boot
@@ -11,7 +10,6 @@
 /Rootfs/rootfs
 /initramfs.cpio
 /Rootfs/initramfs.cpio.gz
-<<<<<<< HEAD
 /Kernel/usb_r_os_files/
 /B-root/Images/
 /Rootfs/boot.scr
@@ -22,7 +20,6 @@
 **/rootfs/
 /usb_rootfs_works
 
-=======
 *.log
 /B-root/Images
 /Failures
@@ -32,13 +29,3 @@
 /usb_rootfs_works
 Rootfs/uRamdisk
 /Kernel/linux_stable
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> buildroot
-=======
->>>>>>> buildroot
-=======
->>>>>>> buildroot
-=======
->>>>>>> buildroot
