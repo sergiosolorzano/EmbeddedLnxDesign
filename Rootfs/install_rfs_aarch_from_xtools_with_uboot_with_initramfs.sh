@@ -178,20 +178,21 @@ if [ $REGENERATE_ALL ==  1 ]; then
 	mdev -s' >> $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/etc/init.d/$rcS_FILENAME
 	sudo chmod +x $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/etc/init.d/$rcS_FILENAME
 
-	echo "Mount proc and sysfs in $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" ]; then
-	        sudo mount -t proc proc /proc
-	        echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	else 
-	        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	fi
+	#this is required every time we boot rpi, hence rcS is required, not this at host build
+	#echo "Mount proc and sysfs in $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	#if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" ]; then
+	#        sudo mount -t proc proc /proc
+	#        echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	#else 
+	#        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/proc already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	#fi
 
-	if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" ]; then
-	        sudo mount -t sysfs sysfs /sys
-		echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	else 
-	        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
-	fi
+	#if ! [ -d "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" ]; then
+	#        sudo mount -t sysfs sysfs /sys
+#		echo "Mounted $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	#else 
+	#        echo "$THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR/sys already mounted, skip" 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
+	#fi
 
 	# Change the owner of the directories to be root
 	# Because current user doesn't exist on target device
@@ -302,6 +303,9 @@ if [ ! -e dev/console ]; then
 else
 	echo "dev/console busybox device not created because it already exists." 2>&1 | tee -a "$BUSYBOX_LOG_FILENAME_PATH/$BUSYBOX_LOG_FILENAME"
 fi
+
+#set uid root to rootfs
+sudo chmod -R 4755 $THIS_SCRIPT_DIR/$ROOTFS_ROOT_DIR
 
 #Transferring rootfs to the target
 #Create a standalone initramfs
