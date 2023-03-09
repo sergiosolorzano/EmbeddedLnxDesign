@@ -10,16 +10,11 @@ THIS_SCRIPT_DIR="`pwd`"
 THIS_SCRIPT_NAME=`basename "$0"`
 source "$THIS_SCRIPT_DIR/paths.sh" || (echo "Unable to load paths, exiting" && exit 1)
 
-EMBEDDED_LINUX_PATH="$HOME/el"
-
 UTILITIES_DIR="$THIS_SCRIPT_DIR/../Utilities"
 
-IMAGE_FILENAME="sdcard.img"
-IMAGE_DIR="$EMBEDDED_LINUX_PATH/$RENAMED_BUILDROOT_DIR_NAME/output/images"
-POST_IMAGE_FILENAME="post-image.sh"
-POST_IMAGE_DIR="$EMBEDDED_LINUX_PATH/$RENAMED_BUILDROOT_DIR_NAME/board/raspberrypi"
-GENIMAGE_FILENAME="genimage-raspberrypi4-64.cfg"
-GENIMAGE_DIR="$EMBEDDED_LINUX_PATH/$RENAMED_BUILDROOT_DIR_NAME/board/raspberrypi"
+rpi=${1:-"raspberrypi4-64"}
+
+IMAGE_FILENAME="$YOCTO_DIR_PATH/tmp/deploy/images/${rpi}/rpi-test*wic.bz2"
 
 #Get Etcher
 echo " "; read -p "Install Etcher? (y/n)" choice
@@ -44,18 +39,15 @@ esac
 echo " "
 echo "Instructions to copy via Etcher to SD Card and kick off rpi4"
 echo "Click on Flash from File on Etcher."
-echo "Locate and Select the sdcard.img file built for the RPi."
+echo "Locate and Select the image file $IMAGE_FILENAME built for the RPi."
 echo "Click Select target on Etcher."
-echo "Select the microSD card inserted in Step #1."
+echo "Select the microSD card inserted."
 echo "Click Flash on Etcher to write the image."
 echo "Eject the microSD card once Etcher is done."
 echo "Insert the microSD card into the RPi4."
 echo "Apply power and start the RPi4."
 echo " "
 echo "Confirm that the Pi4 booted successfully. "
-echo "Plug it into the network and the network activity lights should blink."
-echo "You can add an ssh server such as dropbear or openssh "
-echo "to the buildroot image configuration."
 
 echo " "; echo "Executing Etcher image"
 $UTILITIES_DIR/balenaEtcher-1.7.9-x64.AppImage --no-sandbox --disable-gpu-sandbox --disable-seccomp-filter-sandbox
