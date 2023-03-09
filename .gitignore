@@ -29,3 +29,5 @@
 /usb_rootfs_works
 Rootfs/uRamdisk
 /Kernel/linux_stable
+
+/Yocto/log-yocto/Release*
